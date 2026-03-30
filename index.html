@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Meet Patel's Portfolio</title>
+  <link rel="icon" type="image/jpeg" href="images/Logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,300;0,6..12,400;0,6..12,600;0,6..12,700;0,6..12,800;1,6..12,300;1,6..12,400;1,6..12,700&display=swap" rel="stylesheet">
+  <style>
+    /* ════════════════════════════════════════════════════
+       GLOBAL RESET & VARIABLES
+    ════════════════════════════════════════════════════ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --black:      #1a1a1a;
+      --nav-bg:     #222222;
+      --white:      #ffffff;
+      --accent:     #1a73e8;
+      --gray-bg:    #f4f4f4;
+      --gray-light: #f7f7f7;
+      --gray-mid:   #e0e0e0;
+      --gray-text:  #666;
+      --nav-height: 66px;
+      --font: 'Nunito Sans', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--white); color: var(--black); overflow-x: hidden; }
+
+    /* ════════════════════════════════════════════════════
+       PAGE SYSTEM — show/hide pages
+    ════════════════════════════════════════════════════ */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    @keyframes pageIn {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .page.active { animation: pageIn 0.45s cubic-bezier(0.22,1,0.36,1) both; }
+
+    /* ════════════════════════════════════════════════════
+       SHARED NAVBAR
+    ════════════════════════════════════════════════════ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--nav-height); background: var(--nav-bg);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 44px; z-index: 1000;
+    }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; cursor: pointer; }
+    .nav-logo img { height: 44px; width: 44px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.5); transition: opacity 0.2s, border-color 0.2s; display: block; }
+    .nav-logo:hover img { opacity: 0.7; border-color: rgba(255,255,255,0.2); }
+    .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-family: var(--font); font-weight: 400; font-size: 0.97rem;
+      color: var(--white); text-decoration: none; cursor: pointer; transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: rgba(255,255,255,0.4); }
+    .nav-social { display: flex; align-items: center; gap: 20px; }
+    .nav-social a { color: var(--white); text-decoration: none; display: flex; align-items: center; transition: color 0.2s; }
+    .nav-social a:hover { color: rgba(255,255,255,0.35); }
+    .nav-social svg { width: 18px; height: 18px; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--white); border-radius: 2px; transition: all 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+    .mobile-menu {
+      display: none; position: fixed; top: var(--nav-height);
+      left: 0; right: 0; background: var(--nav-bg);
+      padding: 16px 28px 24px; z-index: 999; flex-direction: column;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: var(--font); font-weight: 400; font-size: 1rem;
+      color: rgba(255,255,255,0.8); text-decoration: none; cursor: pointer;
+      padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .mobile-menu a:last-of-type { border-bottom: none; }
+    .mobile-social { display: flex; gap: 18px; margin-top: 18px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.1); }
+    .mobile-social a { color: rgba(255,255,255,0.6); text-decoration: none; display: flex; align-items: center; }
+    .mobile-social svg { width: 18px; height: 18px; }
+
+    /* ════════════════════════════════════════════════════
+       SHARED FOOTER
+    ════════════════════════════════════════════════════ */
+    footer {
+      background: var(--nav-bg); color: rgba(255,255,255,0.4);
+      text-align: center; padding: 14px 40px;
+      font-size: 0.78rem; letter-spacing: 0.04em; font-weight: 300;
+    }
+
+    /* ════════════════════════════════════════════════════
+       PAGE 1: HOME / INDEX
+    ════════════════════════════════════════════════════ */
+    .hero {
+      min-height: 100vh; padding-top: var(--nav-height);
+      display: flex; align-items: center; background: var(--white);
+    }
+    .hero-inner {
+      max-width: 1160px; margin: 0 auto;
+      padding: 80px 44px 100px;
+      display: grid; grid-template-columns: 1fr 1.1fr;
+      gap: 70px; align-items: center; width: 100%;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-photo-wrap {
+      position: relative;
+      animation: fadeUp 0.85s ease both;
+      display: flex; justify-content: center;
+    }
+    .hero-photo-frame {
+      width: 100%; max-width: 400px;
+      border-radius: 3px; overflow: hidden;
+      background: transparent;
+    }
+    .hero-photo-frame img {
+      width: 100%; height: auto;
+      display: block; object-fit: contain;
+    }
+    .hero-text { animation: fadeUp 0.85s 0.15s ease both; }
+    .hero-greeting {
+      font-family: 'Georgia', serif; font-weight: 400; font-style: italic;
+      font-size: 1.15rem; color: var(--gray-text); margin-bottom: 4px;
+    }
+    .hero-name {
+      font-family: var(--font); font-weight: 700;
+      font-size: clamp(3.2rem, 6.5vw, 5.6rem);
+      line-height: 1.0; color: var(--black);
+      letter-spacing: -2px; margin-bottom: 24px;
+    }
+    .hero-tagline {
+      font-family: var(--font); font-weight: 300;
+      font-size: 1.05rem; color: var(--gray-text);
+      line-height: 1.78; max-width: 420px; margin-bottom: 44px;
+    }
+    .scroll-btn {
+      display: inline-flex; flex-direction: column; align-items: center;
+      gap: 8px; color: var(--black); text-decoration: none; cursor: pointer;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; transition: color 0.2s;
+    }
+    .scroll-btn:hover { color: var(--accent); }
+    .scroll-circle {
+      width: 38px; height: 38px; border: 1.5px solid #aaa;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s; animation: bounceY 2s ease-in-out infinite;
+    }
+    .scroll-btn:hover .scroll-circle { border-color: var(--accent); }
+    .scroll-circle svg { width: 14px; height: 14px; stroke: #aaa; transition: stroke 0.2s; }
+    .scroll-btn:hover .scroll-circle svg { stroke: var(--accent); }
+    @keyframes bounceY {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(6px); }
+    }
+    .banner-section {
+      width: 100%; position: relative; padding: 0 48px; margin: 0; background: var(--white);
+      box-sizing: border-box;
+    }
+    .banner-section img { width: 100%; height: auto; display: block; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); object-fit: contain; max-height: calc(100vh - var(--nav-height)); }
+    .banner-overlay { display: none; }
+    #about {
+      max-width: 1160px; margin: 0 auto; padding: 120px 44px;
+      display: grid; grid-template-columns: 1fr 2fr;
+      gap: 80px; align-items: start;
+    }
+    .about-label { position: sticky; top: 100px; }
+    .section-heading {
+      font-family: var(--font); font-weight: 700;
+      font-size: clamp(2.6rem, 5vw, 4rem);
+      line-height: 1.0; letter-spacing: -2px; color: var(--black);
+    }
+    .about-body p {
+      font-size: 1rem; line-height: 1.85; color: #444;
+      margin-bottom: 20px; font-weight: 300;
+    }
+    .about-body p strong { font-weight: 700; color: var(--black); }
+    .about-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+    .tag {
+      font-family: var(--font); font-size: 0.74rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 7px 15px; border: 1.5px solid #ccc; border-radius: 100px;
+      color: var(--black); transition: background 0.2s, color 0.2s, border-color 0.2s; cursor: default;
+    }
+    .tag:hover { background: var(--black); color: var(--white); border-color: var(--black); }
+
+    /* ════════════════════════════════════════════════════
+       PAGE 2: EXPERIENCE
+    ════════════════════════════════════════════════════ */
+    .exp-hero {
+      position: relative; padding: calc(var(--nav-height) + 80px) 44px 80px;
+      text-align: center; overflow: hidden; background: #111;
+    }
+    .exp-hero-bg {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: center; display: block; z-index: 0;
+    }
+    .exp-hero::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0.35) 100%);
+      z-index: 1;
+    }
+    .exp-hero > *:not(.exp-hero-bg) { position: relative; z-index: 2; }
+    .exp-hero h1 {
+      font-family: var(--font); font-weight: 700;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      color: var(--white); letter-spacing: -2px; line-height: 1; margin-bottom: 14px;
+    }
+    .exp-hero p { font-weight: 300; font-size: 1rem; color: rgba(255,255,255,0.6); max-width: 480px; margin: 0 auto 20px; line-height: 1.75; }
+    .resume-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.15); border: 1.5px solid rgba(255,255,255,0.5);
+      color: #fff; font-family: var(--font); font-weight: 700; font-size: 0.8rem;
+      letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
+      padding: 12px 24px; border-radius: 50px; transition: background 0.2s, border-color 0.2s, transform 0.15s;
+      backdrop-filter: blur(4px);
+    }
+    .resume-btn:hover { background: rgba(255,255,255,0.28); border-color: #fff; transform: translateY(-2px); }
+    .resume-btn svg { width: 15px; height: 15px; }
+    .section-block { max-width: 1100px; margin: 0 auto; padding: 80px 44px; }
+    .section-title-wrap { display: flex; align-items: center; gap: 16px; margin-bottom: 48px; }
+    .section-title-wrap h2 {
+      font-family: var(--font); font-weight: 700;
+      font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -1.5px; color: var(--black); line-height: 1;
+    }
+    .section-divider { flex: 1; height: 1px; background: var(--gray-mid); }
+    .section-icon {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0;
+    }
+    .section-icon svg { width: 22px; height: 22px; }
+    .icon-edu { background: #e8f0fd; color: #1a73e8; }
+    .icon-work { background: #e6f4ea; color: #1e8449; }
+    .icon-vol { background: #fef3e2; color: #e67e22; }
+    /* Education */
+    .edu-card {
+      display: grid; grid-template-columns: 180px 1fr;
+      gap: 40px; align-items: start;
+      background: var(--gray-light); border-radius: 8px;
+      padding: 36px; border-left: 4px solid var(--accent);
+    }
+    .edu-logo-wrap { display: flex; align-items: center; justify-content: center; border-radius: 6px; overflow: hidden; aspect-ratio: 1; }
+    .edu-logo-wrap img { width: 100%; height: auto; object-fit: contain; border-radius: 4px; }
+    .edu-degree { font-weight: 700; font-size: 1.2rem; color: var(--black); margin-bottom: 5px; letter-spacing: -0.3px; }
+    .edu-university { font-weight: 600; font-size: 0.92rem; color: var(--accent); margin-bottom: 4px; }
+    .edu-duration { font-size: 0.82rem; color: var(--gray-text); font-weight: 400; margin-bottom: 12px; }
+    .edu-achievement {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #fff3cd; border: 1px solid #ffc107; color: #856404;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 4px 12px; border-radius: 100px; margin-bottom: 20px;
+    }
+    .edu-achievement::before { content: '🏆'; font-size: 0.85rem; }
+    .edu-coursework-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-text); margin-bottom: 10px; }
+    .course-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+    .course-tag {
+      font-size: 0.74rem; font-weight: 600; padding: 5px 12px;
+      background: var(--white); border: 1.5px solid var(--gray-mid);
+      border-radius: 100px; color: var(--black); transition: border-color 0.2s, background 0.2s;
+    }
+    .course-tag:hover { border-color: var(--accent); background: #e8f0fd; }
+    /* Certification */
+    .cert-section { text-align: center; margin-bottom: 44px; }
+    .cert-section-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--gray-text); margin-bottom: 18px;
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+    }
+    .cert-section-label::before, .cert-section-label::after {
+      content: ''; display: block; flex: 1; max-width: 80px; height: 1px; background: var(--gray-mid);
+    }
+    .cert-badge-btn {
+      display: inline-flex; flex-direction: column; align-items: center;
+      gap: 14px; cursor: pointer; background: none; border: none;
+      padding: 0; text-decoration: none; transition: transform 0.25s;
+    }
+    .cert-badge-btn:hover { transform: translateY(-4px); }
+    .cert-badge-btn:hover .cert-shield { box-shadow: 0 16px 48px rgba(196,0,28,0.25); }
+    .cert-shield {
+      width: 130px; height: 130px; border-radius: 50%;
+      background: #fff; border: 5px solid #c4001c;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      box-shadow: 0 8px 32px rgba(196,0,28,0.15), 0 0 0 2px #f0a0a8;
+      transition: box-shadow 0.25s; position: relative; overflow: hidden;
+    }
+    .cert-shield::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 38%;
+      background: #c4001c; z-index: 0;
+    }
+    .cert-brand { position: relative; z-index: 1; font-family: var(--font); font-weight: 900; font-size: 0.75rem; letter-spacing: 0.04em; color: #fff; margin-bottom: 2px; }
+    .cert-plus { position: relative; z-index: 1; font-family: var(--font); font-weight: 900; font-size: 2rem; color: #c4001c; line-height: 1; }
+    .cert-label-pill { border: 2px solid #c4001c; border-radius: 50px; padding: 2px 10px; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.1em; color: #c4001c; text-transform: uppercase; position: relative; z-index: 1; margin-top: -2px; }
+    .cert-series { position: relative; z-index: 1; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #555; margin-top: 2px; }
+    .cert-badge-info { text-align: center; }
+    .cert-name { font-weight: 700; font-size: 1rem; color: var(--black); margin-bottom: 3px; }
+    .cert-meta { font-size: 0.76rem; font-weight: 400; color: var(--gray-text); line-height: 1.5; }
+    .cert-meta strong { font-weight: 700; color: #c4001c; }
+    .cert-view-hint { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-top: 4px; display: flex; align-items: center; justify-content: center; gap: 4px; }
+    .cert-view-hint svg { width: 12px; height: 12px; }
+    /* Industry labels */
+    .industry-label { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+    .pill { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; }
+    .pill-tech { background: #e8f0fd; color: var(--accent); }
+    .pill-nontech { background: #fce8e6; color: #c0392b; }
+    .industry-intro { font-size: 1rem; font-weight: 300; color: var(--gray-text); line-height: 1.7; max-width: 100%; margin-bottom: 40px; }
+    .industry-intro strong { font-weight: 700; color: var(--black); }
+    /* Timeline */
+    .timeline { position: relative; padding-left: 28px; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 2px; background: var(--gray-mid); }
+    .job-card {
+      position: relative; margin-bottom: 40px; background: var(--white);
+      border: 1px solid var(--gray-mid); border-radius: 8px; padding: 28px;
+      transition: box-shadow 0.25s, border-color 0.25s;
+    }
+    .job-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.07); border-color: #bbb; }
+    .job-card::before {
+      content: ''; position: absolute; left: -34px; top: 24px;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--accent); border: 2px solid var(--white); box-shadow: 0 0 0 2px var(--accent);
+    }
+    .job-card.nontech::before { background: #c0392b; box-shadow: 0 0 0 2px #c0392b; }
+    .company-logo-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+    .job-title { font-weight: 700; font-size: 1.05rem; color: var(--black); letter-spacing: -0.2px; }
+    .job-duration { font-size: 0.78rem; font-weight: 600; color: var(--gray-text); white-space: nowrap; background: var(--gray-light); padding: 4px 12px; border-radius: 100px; }
+    .job-company { font-weight: 600; font-size: 0.88rem; color: var(--accent); margin-bottom: 14px; }
+    .job-card.nontech .job-company { color: #c0392b; }
+    .job-duties { list-style: none; margin-bottom: 18px; }
+    .job-duties li { position: relative; padding-left: 18px; font-size: 0.9rem; font-weight: 300; line-height: 1.75; color: #444; margin-bottom: 7px; }
+    .job-duties li::before { content: '—'; position: absolute; left: 0; color: var(--gray-mid); font-weight: 400; }
+    .skills-row { display: flex; flex-wrap: wrap; gap: 7px; }
+    .skill-chip { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; padding: 4px 11px; background: var(--gray-light); border-radius: 100px; color: #555; border: 1px solid var(--gray-mid); }
+    .company-logo-box { width: 48px; height: 48px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.7rem; color: white; flex-shrink: 0; }
+    .logo-smp { background: linear-gradient(135deg, #f39c12, #d68910); }
+    /* Achievements */
+    .achievements-strip { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 28px; margin-bottom: 4px; }
+    .achievement-stat {
+      flex: 1; min-width: 140px;
+      background: linear-gradient(135deg, #2c1a0e 0%, #5a3320 50%, #8b5e3c 100%);
+      border-radius: 8px; padding: 18px 20px; text-align: center;
+      border-bottom: 3px solid #e8a96a; box-shadow: 0 4px 16px rgba(139,94,60,0.25);
+    }
+    .achievement-stat .stat-number { font-family: var(--font); font-weight: 700; font-size: 1.65rem; color: #fff; letter-spacing: -1px; line-height: 1; margin-bottom: 5px; }
+    .achievement-stat .stat-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,220,180,0.65); line-height: 1.4; }
+    /* Section separator */
+    .section-sep { border: none; border-top: 1px solid var(--gray-mid); max-width: 1100px; margin: 0 auto; }
+    /* Snap gallery */
+    .snap-section { margin: 40px 0 48px; }
+    .snap-heading { font-family: var(--font); font-weight: 700; font-size: 1.4rem; letter-spacing: -0.5px; color: var(--black); margin-bottom: 16px; }
+    .snap-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 220px 220px; gap: 10px; border-radius: 14px; overflow: hidden; }
+    .snap-item { position: relative; overflow: hidden; background: var(--gray-light); cursor: pointer; border-radius: 4px; }
+    .snap-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
+    .snap-item:hover img { transform: scale(1.08); }
+    .snap-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 50%);
+      opacity: 0; transition: opacity 0.3s;
+      display: flex; align-items: flex-end; padding: 14px; pointer-events: none;
+    }
+    .snap-item:hover .snap-overlay { opacity: 1; }
+    .snap-overlay-icon { width: 32px; height: 32px; background: rgba(255,255,255,0.15); backdrop-filter: blur(4px); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: auto; }
+    .snap-overlay-icon svg { width: 14px; height: 14px; color: white; }
+    .snap-num { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.8); }
+    /* Work trio */
+    .work-mosaic-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-text); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; margin-top: 20px; }
+    .work-mosaic-label::after { content: ''; flex: 1; height: 1px; background: var(--gray-mid); }
+    .work-trio { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 170px; gap: 8px; border-radius: 12px; overflow: hidden; margin-bottom: 8px; }
+    .trio-item { position: relative; overflow: hidden; background: var(--gray-light); cursor: pointer; }
+    .trio-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
+    .trio-item:hover img { transform: scale(1.08); }
+    .trio-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: rgba(0,0,0,0.3); }
+    .trio-placeholder svg { width: 24px; height: 24px; opacity: 0.35; }
+    .mosaic-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: rgba(0,0,0,0.3); }
+    .mosaic-placeholder svg { width: 26px; height: 26px; opacity: 0.35; }
+    .work-img-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 55%); opacity: 0; transition: opacity 0.3s; display: flex; align-items: flex-end; padding: 12px; }
+    .trio-item:hover .work-img-overlay, .snap-item:hover .work-img-overlay { opacity: 1; }
+    .work-img-overlay span { color: white; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+    /* Tints */
+    .mt-web3 { background: linear-gradient(135deg, #e0f7fa, #b2ebf2); }
+    .mt-data { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); }
+    .mt-crypto { background: linear-gradient(135deg, #ede7f6, #d1c4e9); }
+    .mt-doc { background: linear-gradient(135deg, #fff3e0, #ffe0b2); }
+    .mt-office { background: linear-gradient(135deg, #fce4ec, #f8bbd0); }
+    .mt-team { background: linear-gradient(135deg, #fff8e1, #ffecb3); }
+    .mt-sales { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); }
+    /* Lightbox */
+    .lightbox {
+      display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.92); z-index: 9999;
+      padding: 24px; cursor: zoom-out; overflow: hidden;
+    }
+    .lightbox.open { display: flex; align-items: center; justify-content: center; }
+    @keyframes lbIn { from { opacity: 0; transform: scale(0.93); } to { opacity: 1; transform: scale(1); } }
+    .lightbox-inner {
+      position: relative;
+      max-width: 90vw; max-height: 90vh;
+      display: flex; align-items: center; justify-content: center;
+      animation: lbIn 0.28s cubic-bezier(0.22,1,0.36,1) both; cursor: default;
+    }
+    .lightbox-inner img { width: auto; height: auto; max-width: 85vw; max-height: 85vh; object-fit: contain; border-radius: 8px; display: block; box-shadow: 0 24px 80px rgba(0,0,0,0.6); }
+    .lightbox-placeholder { width: 500px; height: 400px; max-width: 85vw; max-height: 85vh; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; color: rgba(255,255,255,0.5); font-size: 0.88rem; font-weight: 300; letter-spacing: 0.06em; }
+    .lightbox-placeholder svg { width: 48px; height: 48px; opacity: 0.3; }
+    .lightbox-close { position: absolute; top: -16px; right: -16px; width: 40px; height: 40px; background: rgba(255,255,255,0.12); border: none; border-radius: 50%; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; z-index: 1; }
+    .lightbox-close:hover { background: rgba(255,255,255,0.25); }
+    .lightbox-close svg { width: 18px; height: 18px; }
+    .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; background: rgba(255,255,255,0.12); border: none; border-radius: 50%; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+    .lightbox-nav:hover { background: rgba(255,255,255,0.25); }
+    .lightbox-nav.prev { left: -56px; }
+    .lightbox-nav.next { right: -56px; }
+    .lightbox-nav svg { width: 20px; height: 20px; }
+    .lightbox-counter { position: absolute; bottom: -32px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.45); letter-spacing: 0.08em; }
+    /* Volunteering */
+    .vol-card { background: var(--nav-bg); border-radius: 8px; padding: 32px 36px; display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: start; }
+    .vol-icon { width: 50px; height: 50px; background: rgba(255,255,255,0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+    .vol-title { font-weight: 700; font-size: 1.05rem; color: var(--white); margin-bottom: 4px; }
+    .vol-org { font-weight: 600; font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-bottom: 10px; }
+    .vol-body { font-size: 0.9rem; font-weight: 300; color: rgba(255,255,255,0.65); line-height: 1.75; }
+
+    /* ════════════════════════════════════════════════════
+       PAGE 3: BLOG
+    ════════════════════════════════════════════════════ */
+    #page-blog { background: var(--white); }
+    .blog-hero {
+      position: relative; padding: calc(var(--nav-height) + 80px) 44px 80px;
+      text-align: center; overflow: hidden; background: #f0ece6;
+    }
+    .blog-hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; z-index: 0; }
+    .blog-hero::after { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.62); z-index: 1; }
+    .blog-hero > *:not(.blog-hero-bg) { position: relative; z-index: 2; }
+    .blog-hero .eyebrow { font-size: 0.74rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; display: flex; align-items: center; justify-content: center; gap: 12px; }
+    .blog-hero .eyebrow::before, .blog-hero .eyebrow::after { content: ''; display: block; width: 36px; height: 1px; background: var(--accent); opacity: 0.6; }
+    .blog-hero h1 { font-weight: 800; font-size: clamp(2.8rem, 6vw, 5rem); color: var(--black); letter-spacing: -2px; line-height: 1; margin-bottom: 16px; }
+    .blog-hero p { font-weight: 400; font-size: 1rem; color: #444; max-width: 480px; margin: 0 auto; line-height: 1.75; }
+    .blog-post { max-width: 980px; margin: 0 auto; padding: 80px 44px; }
+    .post-sep { border: none; border-top: 1px solid var(--gray-mid); max-width: 980px; margin: 0 auto; }
+    .post-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 5px 14px; border-radius: 100px; margin-bottom: 14px; }
+    .tag-life { background: #e8f5e9; color: #2e7d32; }
+    .tag-photo { background: #fce4ec; color: #c2185b; }
+    .tag-travel { background: #e8f0fd; color: #1a73e8; }
+    .tag-uni { background: #fff3e0; color: #e65100; }
+    .post-title { font-weight: 800; font-size: clamp(1.7rem, 4vw, 2.8rem); letter-spacing: -1px; color: var(--black); line-height: 1.05; margin-bottom: 10px; }
+    .post-meta { font-size: 0.78rem; font-weight: 400; color: var(--gray-text); margin-bottom: 28px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .post-meta svg { width: 13px; height: 13px; }
+    .post-body p { font-size: 1rem; font-weight: 300; color: #3a3a3a; line-height: 1.85; margin-bottom: 18px; }
+    .post-body p strong { font-weight: 700; color: var(--black); }
+    .life-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; margin-bottom: 36px; }
+    .illus-card { border-radius: 12px; padding: 20px; display: flex; align-items: center; gap: 14px; transition: transform 0.2s; }
+    .illus-card:hover { transform: translateX(5px); }
+    .illus-card + .illus-card { margin-top: 12px; }
+    .card-growth { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); }
+    .card-connect { background: linear-gradient(135deg, #e3f2fd, #bbdefb); }
+    .card-travel { background: linear-gradient(135deg, #fff3e0, #ffe0b2); }
+    .card-music { background: linear-gradient(135deg, #f3e5f5, #e1bee7); }
+    .illus-emoji { font-size: 1.8rem; flex-shrink: 0; }
+    .illus-text h4 { font-weight: 700; font-size: 0.88rem; margin-bottom: 2px; }
+    .illus-text p { font-size: 0.78rem; font-weight: 300; color: #555; line-height: 1.5; }
+    .journey-steps { display: flex; justify-content: space-between; gap: 8px; margin: 28px 0; flex-wrap: wrap; }
+    .j-step { flex: 1; min-width: 70px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 6px; position: relative; }
+    .j-step::after { content: '→'; position: absolute; right: -12px; top: 14px; font-size: 0.9rem; color: var(--gray-mid); }
+    .j-step:last-child::after { display: none; }
+    .j-dot { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+    .j-step:nth-child(1) .j-dot { background: #fff8e1; }
+    .j-step:nth-child(2) .j-dot { background: #e8f5e9; }
+    .j-step:nth-child(3) .j-dot { background: #e3f2fd; }
+    .j-step:nth-child(4) .j-dot { background: #fce4ec; }
+    .j-label { font-size: 0.7rem; font-weight: 600; color: var(--gray-text); }
+    .wordcloud-wrap { margin-top: 32px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); max-width: 580px; margin-left: auto; margin-right: auto; }
+    .wordcloud-wrap img { width: 100%; display: block; }
+    .wordcloud-caption { text-align: center; font-size: 0.76rem; font-weight: 300; font-style: italic; color: var(--gray-text); margin-top: 8px; }
+    .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 200px 200px; gap: 10px; margin-top: 36px; border-radius: 12px; overflow: hidden; }
+    .grid-item { position: relative; overflow: hidden; background: var(--gray-light); cursor: default; }
+    .blog-grid-item { cursor: pointer; }
+    .grid-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
+    .grid-item:hover img { transform: scale(1.08); }
+    .grid-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0); display: flex; align-items: flex-end; padding: 12px; transition: background 0.3s; }
+    .grid-item:hover .grid-overlay { background: rgba(0,0,0,0.3); }
+    .grid-overlay-text { color: white; font-size: 0.74rem; font-weight: 600; opacity: 0; transform: translateY(8px); transition: opacity 0.3s, transform 0.3s; }
+    .grid-item:hover .grid-overlay-text { opacity: 1; transform: translateY(0); }
+    .tint-pink { background: linear-gradient(135deg, #fce4ec, #f8bbd0); }
+    .tint-blue { background: linear-gradient(135deg, #e3f2fd, #bbdefb); }
+    .tint-green { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); }
+    .tint-amber { background: linear-gradient(135deg, #fff8e1, #ffecb3); }
+    .tint-purple { background: linear-gradient(135deg, #f3e5f5, #e1bee7); }
+    .tint-teal { background: linear-gradient(135deg, #e0f7fa, #b2ebf2); }
+    .tint-navy { background: linear-gradient(135deg, #e8eaf6, #c5cae9); }
+    .tint-red { background: linear-gradient(135deg, #ffebee, #ffcdd2); }
+    .insta-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+      color: white; font-weight: 700; font-size: 0.85rem;
+      letter-spacing: 0.06em; padding: 12px 22px;
+      border-radius: 50px; text-decoration: none; margin-top: 18px;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .insta-cta:hover { opacity: 0.88; transform: translateY(-2px); }
+    .insta-cta svg { width: 18px; height: 18px; }
+    .travel-highlights { display: flex; flex-wrap: wrap; gap: 9px; margin: 24px 0 6px; }
+    .highlight-chip { display: flex; align-items: center; gap: 6px; background: var(--gray-light); border: 1px solid var(--gray-mid); border-radius: 100px; padding: 5px 13px; font-size: 0.76rem; font-weight: 600; color: var(--black); }
+
+    /* ════════════════════════════════════════════════════
+       PAGE 4: CONTACT
+    ════════════════════════════════════════════════════ */
+    #page-contact { background: var(--gray-bg); min-height: 100vh; }
+    .stage { min-height: 100vh; padding-top: var(--nav-height); display: flex; align-items: center; justify-content: center; padding-left: 40px; padding-right: 40px; position: relative; }
+    .hero-card { display: flex; align-items: center; justify-content: center; position: relative; max-width: 900px; width: 100%; }
+    .text-circle {
+      width: 360px; height: 360px; background: var(--white); border-radius: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 48px 44px; flex-shrink: 0;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.08); position: relative; z-index: 2;
+    }
+    .text-circle .eyebrow { font-size: 0.85rem; font-weight: 400; color: var(--accent); margin-bottom: 14px; font-style: italic; }
+    .text-circle h1 { font-family: var(--font); font-weight: 800; font-size: clamp(1.4rem, 2.8vw, 1.9rem); color: var(--black); text-transform: uppercase; letter-spacing: -0.5px; line-height: 1.15; margin-bottom: 26px; }
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent); color: var(--white); font-family: var(--font);
+      font-weight: 700; font-size: 0.8rem; letter-spacing: 0.12em;
+      text-transform: uppercase; border: none; border-radius: 50px;
+      padding: 13px 26px; cursor: pointer;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-btn:hover { background: #1558b0; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,115,232,0.35); }
+    .photo-circle {
+      width: 340px; height: 340px; border-radius: 50%; overflow: hidden; flex-shrink: 0;
+      margin-left: -50px; background: #f1c40f;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.12); position: relative; z-index: 1;
+    }
+    .photo-circle img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+    .photo-placeholder-c { width: 100%; height: 100%; background: linear-gradient(145deg, #f1c40f 0%, #e67e22 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: rgba(255,255,255,0.7); }
+    .photo-placeholder-c svg { width: 60px; height: 60px; opacity: 0.5; }
+    .deal-banner {
+      max-width: 900px; margin: 0 auto 56px;
+      background: var(--white); border-radius: 14px; padding: 24px 32px;
+      display: flex; align-items: center; gap: 18px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06); border-left: 4px solid var(--accent);
+    }
+    .deal-icon { width: 48px; height: 48px; background: #e8f0fd; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--accent); }
+    .deal-icon svg { width: 24px; height: 24px; }
+    .deal-text h3 { font-weight: 700; font-size: 0.95rem; color: var(--black); margin-bottom: 4px; }
+    .deal-text p { font-size: 0.85rem; font-weight: 300; color: var(--gray-text); line-height: 1.6; }
+    .deal-text a { color: var(--accent); font-weight: 600; text-decoration: none; }
+    .deal-text a:hover { text-decoration: underline; }
+    /* Modal */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(4px); z-index: 2000; align-items: center; justify-content: center; padding: 24px; }
+    .modal-overlay.open { display: flex; }
+    @keyframes modalIn { from { opacity: 0; transform: scale(0.94) translateY(16px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+    .modal { background: var(--white); border-radius: 16px; padding: 40px 44px; width: 100%; max-width: 500px; position: relative; animation: modalIn 0.3s cubic-bezier(0.22,1,0.36,1) both; box-shadow: 0 24px 80px rgba(0,0,0,0.2); }
+    .modal-close { position: absolute; top: 16px; right: 16px; background: var(--gray-light); border: none; border-radius: 50%; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--gray-text); transition: background 0.2s; }
+    .modal-close:hover { background: var(--gray-mid); }
+    .modal-close svg { width: 15px; height: 15px; }
+    .modal-title { font-weight: 700; font-size: 1.4rem; letter-spacing: -0.5px; color: var(--black); margin-bottom: 4px; }
+    .modal-subtitle { font-size: 0.86rem; font-weight: 300; color: var(--gray-text); margin-bottom: 24px; line-height: 1.6; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+    .form-group label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--black); }
+    .form-group input, .form-group textarea {
+      font-family: var(--font); font-size: 0.9rem; font-weight: 400; color: var(--black);
+      background: var(--gray-light); border: 1.5px solid var(--gray-mid);
+      border-radius: 8px; padding: 10px 13px; outline: none; width: 100%;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(26,115,232,0.1); background: var(--white); }
+    .form-group textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: #bbb; }
+    .send-btn {
+      width: 100%; background: var(--black); color: var(--white);
+      font-family: var(--font); font-size: 0.84rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; border: none;
+      border-radius: 8px; padding: 14px 24px; cursor: pointer; margin-top: 4px;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .send-btn:hover { background: var(--accent); transform: translateY(-2px); }
+    .send-btn svg { width: 15px; height: 15px; }
+    .modal-success { display: none; text-align: center; padding: 12px 0; }
+    .success-icon { width: 68px; height: 68px; background: #e6f4ea; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; color: #2e7d32; }
+    .success-icon svg { width: 34px; height: 34px; }
+    .modal-success h3 { font-weight: 700; font-size: 1.2rem; color: var(--black); margin-bottom: 8px; }
+    .modal-success p { font-size: 0.88rem; font-weight: 300; color: var(--gray-text); line-height: 1.7; }
+
+    /* ════════════════════════════════════════════════════
+       RESPONSIVE — TABLET (max 920px)
+    ════════════════════════════════════════════════════ */
+    @media (max-width: 920px) {
+      nav { padding: 0 24px; }
+      .nav-links, .nav-social { display: none; }
+      .hamburger { display: flex; }
+      /* Home hero */
+      .hero-inner { grid-template-columns: 1fr; padding: 56px 24px 72px; gap: 36px; text-align: center; }
+      .hero-photo-wrap { order: 1; max-width: 340px; margin: 0 auto; }
+      .hero-text { order: 2; }
+      .hero-tagline { margin: 0 auto 36px; }
+      .scroll-btn { margin: 0 auto; }
+      /* About */
+      #about { grid-template-columns: 1fr; padding: 72px 24px; gap: 32px; }
+      .about-label { position: static; }
+      /* Experience */
+      .section-block { padding: 64px 24px; }
+      .edu-card { grid-template-columns: 1fr; gap: 20px; padding: 28px; }
+      .edu-logo-wrap { max-width: 120px; }
+      .vol-card { grid-template-columns: 1fr; gap: 14px; padding: 24px; }
+      /* Blog */
+      .blog-post { padding: 64px 24px; }
+      .life-layout { grid-template-columns: 1fr; gap: 24px; }
+      .photo-grid { grid-template-rows: 160px 160px; }
+      /* Contact */
+      .stage { padding: 20px; }
+      .hero-card { flex-direction: column; gap: 0; }
+      .text-circle { width: 300px; height: 300px; padding: 36px 32px; z-index: 2; }
+      .text-circle h1 { font-size: 1.3rem; }
+      .photo-circle { width: 280px; height: 280px; margin-left: 0; margin-top: -36px; z-index: 1; }
+      .deal-banner { flex-direction: column; text-align: center; padding: 20px; margin: 0 20px 40px; }
+      .modal { padding: 32px 24px; }
+      /* Snap grid */
+      .snap-grid { grid-template-rows: 170px 170px; }
+      /* Work trio */
+      .work-trio { grid-template-rows: 140px; }
+      /* Exp hero */
+      .exp-hero { padding: calc(var(--nav-height) + 48px) 24px 48px; }
+    }
+
+    /* ════════════════════════════════════════════════════
+       RESPONSIVE — MOBILE (max 560px)
+    ════════════════════════════════════════════════════ */
+    @media (max-width: 560px) {
+      nav { padding: 0 16px; }
+      .hero-inner { padding: 44px 16px 64px; }
+      .hero-photo-wrap { max-width: 260px; }
+      .hero-name { font-size: clamp(2.6rem, 10vw, 4rem); }
+      .banner-section { padding: 0 16px; }
+      #about { padding: 56px 16px; }
+      .section-block { padding: 56px 16px; }
+      .snap-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 140px 140px; }
+      .photo-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 130px 130px 130px; }
+      .work-trio { grid-template-columns: 1fr; grid-template-rows: 130px 130px 130px; }
+      .blog-post { padding: 48px 16px; }
+      .life-layout { grid-template-columns: 1fr; }
+      .journey-steps { gap: 4px; }
+      .j-step::after { display: none; }
+      .text-circle { width: 260px; height: 260px; padding: 28px 24px; }
+      .text-circle h1 { font-size: 1.15rem; }
+      .photo-circle { width: 240px; height: 240px; }
+      .form-row { grid-template-columns: 1fr; }
+      .modal { padding: 24px 16px; }
+      .lightbox-nav.prev { left: -40px; }
+      .lightbox-nav.next { right: -40px; }
+      .achievements-strip { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════════════
+       SHARED NAVBAR
+  ════════════════════════════════════════════════════ -->
+  <nav>
+    <a class="nav-logo" onclick="showPage('home')" aria-label="Home">
+      <img src="images/MP.jpg" alt="Meet Patel logo" />
+    </a>
+    <ul class="nav-links">
+      <li><a id="nav-about" onclick="showPage('home'); scrollToAbout()">about</a></li>
+      <li><a id="nav-exp" onclick="showPage('experience')">experience</a></li>
+      <li><a id="nav-blog" onclick="showPage('blog')">blog</a></li>
+      <li><a id="nav-contact" onclick="showPage('contact')">contact</a></li>
+    </ul>
+    <div class="nav-social">
+      <a href="https://www.linkedin.com/in/meet-patel-557aa71b4/" target="_blank" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/_meet.patel.creations_" target="_blank" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+      </a>
+    </div>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a onclick="showPage('home'); scrollToAbout(); closeMobile()">about</a>
+    <a onclick="showPage('experience'); closeMobile()">experience</a>
+    <a onclick="showPage('blog'); closeMobile()">blog</a>
+    <a onclick="showPage('contact'); closeMobile()">contact</a>
+    <div class="mobile-social">
+      <a href="https://www.linkedin.com/in/meet-patel-557aa71b4/" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a href="https://www.instagram.com/_meet.patel.creations_" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════
+       PAGE 1: HOME
+  ════════════════════════════════════════════════════ -->
+  <div id="page-home" class="page active">
+    <section class="hero" id="top">
+      <div class="hero-inner">
+        <div class="hero-photo-wrap">
+          <div class="hero-photo-frame">
+            <img src="images/ProfileAlt.png" alt="Meet Patel" />
+          </div>
+        </div>
+        <div class="hero-text">
+          <p class="hero-greeting">Hey, I am</p>
+          <h1 class="hero-name">Meet Patel</h1>
+          <p class="hero-tagline">CS Graduate and Systems Consultant - providing operational IT support and exploring the edges of tech and business.</p>
+          <a href="#about-section" class="scroll-btn" onclick="scrollToAbout()" aria-label="Scroll to About">
+            <div class="scroll-circle">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="banner-section" id="banner">
+      <img src="images/EXPLORE • HUSTLE • MAKE IT HAPPEN_20260321_151544_0000.png" alt="Explore Hustle Make It Happen" />
+      <div class="banner-overlay"></div>
+    </section>
+
+    <section id="about-section">
+      <div id="about">
+        <div class="about-label">
+          <h2 class="section-heading">About<br>Me.</h2>
+        </div>
+        <div class="about-body">
+          <p>I'm a <strong>Computer Science graduate from TMU</strong> - a tech enthusiast based in Downtown Toronto who doesn't believe in doing just one thing. I've worn multiple hats across tech, retail, sales, and AI training, and I bring that multi-dimensional perspective to every role I take on.</p>
+          <p>Currently, I work full-time as a <strong>Systems Consultant at Long View Systems</strong>, helping organizations navigate and solve IT challenges with precision and clarity. My ability to connect technical depth with business thinking is what sets me apart.</p>
+          <p>Outside work, I'm passionate about <strong>photography, video editing, business domains, and travelling</strong>. I find stories in frames, patterns in markets, and energy in new places. My life runs on one word: <strong>HUSTLE.</strong></p>
+          <div class="about-tags">
+            <span class="tag">Photography</span><span class="tag">Travel</span>
+            <span class="tag">Business Minded</span><span class="tag">Computer Science</span>
+            <span class="tag">Customer Success</span><span class="tag">Entrepreneurship</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer><p>© 2026 Meet Patel</p></footer>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════
+       PAGE 2: EXPERIENCE
+  ════════════════════════════════════════════════════ -->
+  <div id="page-experience" class="page">
+    <div class="exp-hero">
+      <img src="images/Journey.jpg" alt="Journey" class="exp-hero-bg" />
+      <h1>My Journey.</h1>
+      <p>From classrooms to boardrooms - a journey across tech, business, and everything in between.</p>
+      <a href="resume.pdf" download="Meet_Patel_Resume.pdf" class="resume-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Résumé
+      </a>
+    </div>
+
+    <!-- EDUCATION -->
+    <section class="section-block">
+      <div class="section-title-wrap">
+        <span class="section-icon icon-edu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>
+        <h2>Education</h2><div class="section-divider"></div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-logo-wrap"><img src="images/TMU.jpg" alt="Toronto Metropolitan University" /></div>
+        <div class="edu-content">
+          <p class="edu-degree">Bachelor of Science - Computer Science (Honours)</p>
+          <p class="edu-university">Toronto Metropolitan University</p>
+          <p class="edu-duration">September 2021 - April 2025</p>
+          <span class="edu-achievement">Dean's List 2024</span>
+          <p class="edu-coursework-label">Coursework</p>
+          <div class="course-tags">
+            <span class="course-tag">Computer Programming (Python, C++, Java)</span><span class="course-tag">Computer Organization</span><span class="course-tag">Data Structures</span><span class="course-tag">Intro to AI & Machine Learning</span><span class="course-tag">Operating Systems</span><span class="course-tag">Data Mining</span><span class="course-tag">Web Development</span><span class="course-tag">Computer Networks</span><span class="course-tag">Computer Security</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-sep" />
+
+    <!-- WORK EXPERIENCE -->
+    <section class="section-block">
+      <div class="section-title-wrap">
+        <span class="section-icon icon-work"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></span>
+        <h2>Work Experience</h2><div class="section-divider"></div>
+      </div>
+
+      <!-- TECH -->
+      <div class="industry-label"><span class="pill pill-tech">⚙️ Tech Industry</span></div>
+      <p class="industry-intro">I thrive at the intersection of <strong>technology and people</strong>. From diagnosing complex IT incidents in real-time to training AI models and analysing blockchain vulnerabilities - my tech career spans support, research, and emerging technology.</p>
+
+      <!-- CompTIA Badge -->
+      <div class="cert-section">
+        <p class="cert-section-label">Certification</p>
+        <a href="images/CompTIA A+ ce certificate.pdf" target="_blank" class="cert-badge-btn" title="Click to view certificate">
+          <div class="cert-shield"><span class="cert-brand">CompTIA</span><span class="cert-plus">A+</span><span class="cert-label-pill">Certified</span><span class="cert-series">Plus Series</span></div>
+          <div class="cert-badge-info">
+            <p class="cert-name">CompTIA A+ Certified</p>
+            <p class="cert-meta">Issued August 08, 2025 &nbsp;·&nbsp; <strong>Valid until Aug 2028</strong><br/>Credential ID: COMP001022839758</p>
+            <p class="cert-view-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Click to view certificate</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="timeline">
+        <!-- Long View -->
+        <div class="job-card">
+          <div class="company-logo-row">
+            <img src="images/Longview.png" alt="Long View" style="height:48px;width:48px;object-fit:contain;border-radius:6px;flex-shrink:0;background:white;padding:3px;" />
+            <div><p class="job-title">Systems Consultant</p><p class="job-company">Long View Systems</p></div>
+            <div style="margin-left:auto"><span class="job-duration">March 2026 - Present</span></div>
+          </div>
+          <ul class="job-duties">
+            <li>Document customer issues into ServiceNow. Work on tickets daily to increase efficiency and ensure minimal downtime.</li>
+            <li>Analyze symptoms, determine urgency and provide resolution while ensuring First Call Resolution (FCR).</li>
+            <li>Dispatch incidents to appropriate Tier II support groups when FCR is not possible, managing incidents through their full lifecycle.</li>
+          </ul>
+          <div class="skills-row"><span class="skill-chip">ServiceNow</span><span class="skill-chip">Windows/Linux/Mac</span><span class="skill-chip">Active Directory</span><span class="skill-chip">Network Support</span><span class="skill-chip">ITIL</span><span class="skill-chip">Documentation</span></div>
+        </div>
+        <!-- Humber -->
+        <div class="job-card">
+          <div class="company-logo-row">
+            <img src="images/humber-logo.jpg" alt="Humber" style="height:48px;width:48px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#fff;padding:3px;" />
+            <div><p class="job-title">Technical Support Analyst</p><p class="job-company">Humber College (Buchanan Technologies)</p></div>
+            <div style="margin-left:auto"><span class="job-duration">Aug 2025 - Sep 2025</span></div>
+          </div>
+          <ul class="job-duties">
+            <li>Provided frontline support for Windows 10/11, macOS, Office 365, and network connectivity to students and staff.</li>
+            <li>Diagnosed and performed hardware imaging, deployment, and upgrades in compliance with SLA IT policies.</li>
+            <li>Escalated unresolved issues via structured escalation processes to higher-tier support teams.</li>
+          </ul>
+          <div class="skills-row"><span class="skill-chip">Troubleshooting</span><span class="skill-chip">BMC Helix</span><span class="skill-chip">Asset Panda</span><span class="skill-chip">IT Documentation</span><span class="skill-chip">Imaging</span><span class="skill-chip">M365</span></div>
+        </div>
+        <!-- Outlier -->
+        <div class="job-card">
+          <div class="company-logo-row">
+            <img src="images/Outlier.png" alt="Outlier AI" style="height:48px;width:48px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#fff;padding:3px;" />
+            <div><p class="job-title">AI Math Trainer</p><p class="job-company">Outlier AI (Freelancer)</p></div>
+            <div style="margin-left:auto"><span class="job-duration">Nov 2024 - Nov 2025</span></div>
+          </div>
+          <ul class="job-duties">
+            <li>Assessed factual accuracy and contextual relevance of AI-generated mathematical content.</li>
+            <li>Designed and answered 100+ complex mathematical problems using prompt engineering — contributing to a 10% improvement in model performance.</li>
+            <li>Evaluated and ranked AI-generated responses, providing detailed feedback to inform iterative model enhancements.</li>
+          </ul>
+          <div class="skills-row"><span class="skill-chip">Prompt Engineering</span><span class="skill-chip">LLMs</span><span class="skill-chip">AI Evaluation</span><span class="skill-chip">Mathematical Reasoning</span></div>
+        </div>
+        <!-- Extern -->
+        <div class="job-card">
+          <div class="company-logo-row">
+            <img src="images/extern.png" alt="Extern" style="height:48px;width:48px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#fff;padding:3px;" />
+            <div><p class="job-title">Web3 Security Data Analyst Intern</p><p class="job-company">Extern (Webacy)</p></div>
+            <div style="margin-left:auto"><span class="job-duration">Aug 2024 - Sep 2024</span></div>
+          </div>
+          <ul class="job-duties">
+            <li>Analysed and labelled 80+ smart contract vulnerabilities, contributing to protection of $2.5B+ in digital assets.</li>
+            <li>Performed statistical analysis on risk tags - identifying 35% reentrancy issues and 20% access control flaws.</li>
+            <li>Employed K-means clustering on 100 smart contracts, revealing five distinct vulnerability pattern clusters.</li>
+          </ul>
+          <div class="skills-row"><span class="skill-chip">Security Research</span><span class="skill-chip">Machine Learning</span><span class="skill-chip">K-Means Clustering</span><span class="skill-chip">Smart Contracts</span><span class="skill-chip">Statistical Analysis</span></div>
+        </div>
+      </div><!-- /timeline tech -->
+
+      <!-- Snapshots -->
+      <div class="snap-section">
+        <h3 class="snap-heading">Some Snapshots</h3>
+        <div class="snap-grid" id="snapGrid">
+          <div class="snap-item mt-web3" onclick="openLightbox(0)"><img src="images/Tech1.jpg" alt="Photo 1" style="width:100%;height:100%;object-fit:cover;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Photo 1<div class="snap-overlay"><span class="snap-num">01/04</span><div class="snap-overlay-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+          <div class="snap-item mt-data" onclick="openLightbox(1)"><img src="images/Tech2.jpg" alt="Photo 2" style="width:100%;height:100%;object-fit:cover;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Photo 2<div class="snap-overlay"><span class="snap-num">02/04</span><div class="snap-overlay-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+          <div class="snap-item mt-crypto" onclick="openLightbox(2)"><img src="images/Tech3.jpg" style="width:100%;height:100%;object-fit:cover;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/></svg>Photo 3<div class="snap-overlay"><span class="snap-num">03/04</span><div class="snap-overlay-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+          <div class="snap-item mt-doc" onclick="openLightbox(3)"><img src="images/LV.jpg" alt="Photo 4" style="width:100%;height:100%;object-fit:cover;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Photo 4<div class="snap-overlay"><span class="snap-num">04/04</span><div class="snap-overlay-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        </div>
+      </div>
+
+
+
+      <!-- NON-TECH -->
+      <div class="industry-label" style="margin-top:56px;"><span class="pill pill-nontech">🌐 Beyond the Screen - Non-Tech World</span></div>
+      <p class="industry-intro">Not every lesson comes from a terminal. These roles shaped my <strong>resilience, communication, and hustle</strong> - the soft skills no textbook teaches.</p>
+
+      <div class="timeline">
+        <!-- INS Market -->
+        <div class="job-card nontech">
+          <div class="company-logo-row">
+            <img src="images/INS_600x600.jpg" alt="INS Market" style="height:48px;width:48px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#fff;padding:3px;" />
+            <div><p class="job-title">Store Manager</p><p class="job-company">INS Market (Convenience Store)</p></div>
+            <div style="margin-left:auto"><span class="job-duration">Oct 2022 - Mar 2026</span></div>
+          </div>
+          <ul class="job-duties">
+            <li>Managed day-to-day store operations handling 250+ customers daily, overseeing cash handling and driving revenue growth.</li>
+            <li>Managed store inventory through merchandising, ordering, and stocking.</li>
+            <li>Trained new hires, devised marketing strategies, and built a loyal customer base through exceptional service.</li>
+          </ul>
+          <div class="skills-row"><span class="skill-chip">Customer Service</span><span class="skill-chip">Cash Handling</span><span class="skill-chip">Sales</span><span class="skill-chip">Merchandising</span><span class="skill-chip">Retail Operations</span></div>
+        </div>
+        <!-- Internet Pros -->
+        <div class="job-card nontech">
+          <div class="company-logo-row">
+            <img src="images/Rogers-Logo.jpg" alt="Rogers" style="height:48px;width:48px;object-fit:contain;border-radius:6px;flex-shrink:0;background:white;padding:3px;" />
+            <div><p class="job-title">Field Sales Representative</p><p class="job-company">Internet Pros — Rogers / Bell (Self-Employed)</p></div>
+            <div style="margin-left:auto"><span class="job-duration">Jul 2022 - Present</span></div>
+          </div>
+          <ul class="job-duties">
+            <li>Thrived in a fast-paced telecom sales environment, managing B2B and B2C accounts — exceeding sales targets by 20%.</li>
+            <li>Sold Rogers and Bell home WiFi plans by upgrading services and lowering customers' monthly bills.</li>
+            <li>Achieved weekly and monthly sales targets through efficient marketing and sustained customer relationship management.</li>
+          </ul>
+          <div class="skills-row"><span class="skill-chip">Sales</span><span class="skill-chip">Marketing</span><span class="skill-chip">Customer Success</span><span class="skill-chip">KPI Management</span><span class="skill-chip">Telecommunications</span></div>
+        </div>
+        <!-- SMP -->
+        <div class="job-card nontech">
+          <div class="company-logo-row">
+            <img src="images/SMP.png" alt="SMP Promotions" style="height:48px;width:48px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#fff;padding:3px;" />
+            <div><p class="job-title">Office Manager</p><p class="job-company">SMP Promotions</p></div>
+            <div style="margin-left:auto"><span class="job-duration">Jul 2022 - Jul 2023</span></div>
+          </div>
+          <ul class="job-duties">
+            <li>Managed office operations of a telecommunications marketing company, prepared sales and marketing strategies.</li>
+            <li>Trained employees and built a high-performing team that delivered remarkable results.</li>
+            <li>Maximised revenue by going into the field alongside the team to support sales target achievement.</li>
+          </ul>
+          <div class="skills-row"><span class="skill-chip">Office Operations</span><span class="skill-chip">Reports & Dashboards</span><span class="skill-chip">Sales</span><span class="skill-chip">Team Leadership</span><span class="skill-chip">Marketing</span></div>
+        </div>
+
+        <!-- Life at the Office trio -->
+        <p class="work-mosaic-label">Life at the office</p>
+        <div class="work-trio">
+          <div class="trio-item mt-office" onclick="openTrioLightbox(0)" style="cursor:pointer;"><img src="images/NT1.jpg" alt="Office Ops" style="width:100%;height:100%;object-fit:cover;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>Office Ops<div class="snap-overlay"><span class="snap-num">01/03</span><div class="snap-overlay-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+          <div class="trio-item mt-team" onclick="openTrioLightbox(1)" style="cursor:pointer;"><img src="images/NT2.jpg" alt="Team" style="width:100%;height:100%;object-fit:cover;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Team<div class="snap-overlay"><span class="snap-num">02/03</span><div class="snap-overlay-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+          <div class="trio-item mt-sales" onclick="openTrioLightbox(2)" style="cursor:pointer;"><img src="images/NT3.jpg" alt="Sales" style="width:100%;height:100%;object-fit:cover;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>Sales<div class="snap-overlay"><span class="snap-num">03/03</span><div class="snap-overlay-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
+        </div>
+
+
+
+        <!-- Achievements -->
+        <div class="achievements-strip">
+          <div class="achievement-stat"><div class="stat-number">250+</div><div class="stat-label">Customers Served Daily</div></div>
+          <div class="achievement-stat"><div class="stat-number">300+</div><div class="stat-label">Happy Telecom Customers</div></div>
+          <div class="achievement-stat"><div class="stat-number">85%</div><div class="stat-label">Conversion Ratio in Sales</div></div>
+        </div>
+      </div><!-- /timeline nontech -->
+    </section>
+
+    <hr class="section-sep" />
+
+    <!-- VOLUNTEERING -->
+    <section class="section-block">
+      <div class="section-title-wrap">
+        <span class="section-icon icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+        <h2>Volunteering</h2><div class="section-divider"></div>
+      </div>
+      <div class="vol-card">
+        <div class="vol-icon">🎓</div>
+        <div>
+          <p class="vol-title">Senior Orientation Leader</p>
+          <p class="vol-org">Toronto Metropolitan University · August 2022 | August 2023 | August 2024</p>
+          <p class="vol-body">Three years running, I showed up every August to help first-year students find their footing at TMU. As part of the Orientation team, I assisted with activities, answered every question about university life imaginable, and made sure incoming students felt welcome, confident, and ready to hustle.</p>
+        </div>
+      </div>
+    </section>
+    <footer><p>© 2026 Meet Patel</p></footer>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════
+       PAGE 3: BLOG
+  ════════════════════════════════════════════════════ -->
+  <div id="page-blog" class="page">
+    <div class="blog-hero">
+      <img src="Blogbanner.jpg" alt="" class="blog-hero-bg" />
+      <p class="eyebrow">Personal Blog</p>
+      <h1>Stories & Moments.</h1>
+      <p>Life through my lens - thoughts, adventures, and everything that makes the journey worth it.</p>
+    </div>
+
+    <!-- POST 1: LIFE SO FAR -->
+    <article class="blog-post">
+      <span class="post-tag tag-life">🌱 Life & Reflections</span>
+      <h2 class="post-title">Life So Far…</h2>
+      <div class="post-meta"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 4 min read</span><span>·</span><span>Personal</span></div>
+      <div class="life-layout">
+        <div class="post-body">
+          <p>If I had to describe my life in one word, it would be <strong>colourful</strong>. Not always perfect, but always meaningful.</p>
+          <p>I believe deeply in <strong>growth, positivity, great connections, and creativity</strong>. Every stage of my life - from childhood, to school, the incredible chaos of university, and now the real world of work — has handed me a different lesson.</p>
+          <p>Life feels complete when I'm surrounded by <strong>family and good friends</strong> - the kind of people who celebrate your wins, sit with you in your losses, and make ordinary Tuesday evenings feel like something worth remembering.</p>
+          <p>Outside of the hustle, you'll find me on a <strong>long drive on a scenic route</strong>, windows down, Bollywood playlist at full volume. I love <strong>exploring new places</strong> - every new experience adds a layer to who I am.</p>
+        </div>
+        <div class="life-illustrations">
+          <div class="illus-card card-growth"><span class="illus-emoji">🌱</span><div class="illus-text"><h4>Growth Mindset</h4><p>Every challenge is a chapter. Every failure is feedback.</p></div></div>
+          <div class="illus-card card-connect" style="margin-top:12px;"><span class="illus-emoji">🤝</span><div class="illus-text"><h4>Connections Matter</h4><p>Family, friends, mentors — the people in your corner.</p></div></div>
+          <div class="illus-card card-travel" style="margin-top:12px;"><span class="illus-emoji">🚗</span><div class="illus-text"><h4>Long Rides & Bollywood</h4><p>Scenic routes, great songs, zero agenda.</p></div></div>
+          <div class="illus-card card-music" style="margin-top:12px;"><span class="illus-emoji">✨</span><div class="illus-text"><h4>Simple Joys</h4><p>Happiness lives in the small things.</p></div></div>
+        </div>
+      </div>
+      <div class="journey-steps">
+        <div class="j-step"><div class="j-dot">👶</div><span class="j-label">Childhood</span></div>
+        <div class="j-step"><div class="j-dot">📚</div><span class="j-label">School</span></div>
+        <div class="j-step"><div class="j-dot">🎓</div><span class="j-label">University</span></div>
+        <div class="j-step"><div class="j-dot">💼</div><span class="j-label">Work Life</span></div>
+      </div>
+      <!-- Countries Visited -->
+      <div style="margin-top:32px;margin-bottom:8px;">
+        <p style="font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-text);margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:10px;"><span style="flex:1;height:1px;background:var(--gray-mid);display:block;max-width:60px;"></span>Countries Visited<span style="flex:1;height:1px;background:var(--gray-mid);display:block;max-width:60px;"></span></p>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;">
+          <div style="position:relative;width:155px;height:96px;border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.12);flex-shrink:0;"><div style="position:absolute;inset:0;display:flex;flex-direction:column;"><div style="flex:1;background:#FF9933;"></div><div style="flex:1;background:#fff;display:flex;align-items:center;justify-content:center;"><div style="width:16px;height:16px;border-radius:50%;border:2px solid #000080;"></div></div><div style="flex:1;background:#138808;"></div></div><div style="position:absolute;inset:0;background:rgba(0,0,0,0.32);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;"><p style="font-weight:800;font-size:0.88rem;color:#fff;">India</p><p style="font-size:0.65rem;color:rgba(255,255,255,0.75);font-weight:400;">Roots &amp; heritage</p></div></div>
+          <div style="position:relative;width:155px;height:96px;border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.12);flex-shrink:0;"><div style="position:absolute;inset:0;display:flex;"><div style="width:28%;background:#00732F;"></div><div style="flex:1;display:flex;flex-direction:column;"><div style="flex:1;background:#EF3340;"></div><div style="flex:1;background:#ffffff;"></div><div style="flex:1;background:#000;"></div></div></div><div style="position:absolute;inset:0;background:rgba(0,0,0,0.32);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;"><p style="font-weight:800;font-size:0.88rem;color:#fff;">Dubai, UAE</p><p style="font-size:0.65rem;color:rgba(255,255,255,0.75);font-weight:400;">City of wonders</p></div></div>
+          <div style="position:relative;width:155px;height:96px;border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.12);flex-shrink:0;"><div style="position:absolute;inset:0;display:flex;"><div style="width:25%;background:#FF0000;"></div><div style="flex:1;background:#fff;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 20 22" width="20" height="20" fill="#FF0000"><path d="M10 0 L11.5 5 L16 3 L13 7.5 L18 8 L13.5 11 L15 16 L10 13 L5 16 L6.5 11 L2 8 L7 7.5 L4 3 L8.5 5 Z"/><rect x="9" y="14" width="2" height="8"/></svg></div><div style="width:25%;background:#FF0000;"></div></div><div style="position:absolute;inset:0;background:rgba(0,0,0,0.28);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;"><p style="font-weight:800;font-size:0.88rem;color:#fff;">Canada</p><p style="font-size:0.65rem;color:rgba(255,255,255,0.75);font-weight:400;">Home away from home</p></div></div>
+          <div style="position:relative;width:155px;height:96px;border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.12);flex-shrink:0;"><div style="position:absolute;inset:0;display:flex;flex-direction:column;"><div style="flex:1;background:#B22234;"></div><div style="flex:1;background:#fff;"></div><div style="flex:1;background:#B22234;"></div><div style="flex:1;background:#fff;"></div><div style="flex:1;background:#B22234;"></div><div style="flex:1;background:#fff;"></div><div style="flex:1;background:#B22234;"></div></div><div style="position:absolute;top:0;left:0;width:40%;height:43%;background:#3C3B6E;"></div><div style="position:absolute;inset:0;background:rgba(0,0,0,0.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;"><p style="font-weight:800;font-size:0.88rem;color:#fff;">USA</p><p style="font-size:0.65rem;color:rgba(255,255,255,0.75);font-weight:400;">Land of opportunity</p></div></div>
+        </div>
+      </div>
+      <div class="wordcloud-wrap"><img src="images/Word_cloud-ezremove.png" alt="Word cloud" /></div>
+      <p class="wordcloud-caption">Words that define my outlook on life.</p>
+    </article>
+
+    <hr class="post-sep" />
+
+    <!-- POST 2: PHOTOGRAPHY -->
+    <article class="blog-post">
+      <span class="post-tag tag-photo">📷 Interests</span>
+      <h2 class="post-title">Photography - Capturing Life, One Frame at a Time</h2>
+      <div class="post-meta"><span>3 min read</span><span>·</span><span>Photography</span></div>
+      <div class="post-body">
+        <p>Photography isn't just a hobby - it's how I <strong>slow down and pay attention</strong>. I love capturing <strong>nature, golden-hour light, quiet streets, and fleeting moments</strong>.</p>
+        <p>I run an Instagram page - <strong>@_meet.patel.creations_</strong>  where I feature my photography work. Come take a look!</p>
+      </div>
+      <div class="photo-grid">
+        <div class="grid-item blog-grid-item tint-pink" data-group="photo" data-label="Photo 1" onclick="openBlogLightbox('photo', 0)" style="cursor:pointer;">
+          
+          <img src="images/P1.jpg" alt="Photo 1" style="width:100%;height:100%;object-fit:cover;"><span style="font-size:1.3rem;">📸</span>Photo 1
+          <div class="grid-overlay"><span class="grid-overlay-text">📸 Photo 1</span></div>
+        </div>
+        <div class="grid-item blog-grid-item tint-teal" data-group="photo" data-label="Photo 2" onclick="openBlogLightbox('photo', 1)" style="cursor:pointer;">
+          
+          <img src="images/P2.jpg" alt="Photo 2" style="width:100%;height:100%;object-fit:cover;"><span style="font-size:1.3rem;">🌿</span>Photo 2
+          <div class="grid-overlay"><span class="grid-overlay-text">🌿 Photo 2</span></div>
+        </div>
+        <div class="grid-item blog-grid-item tint-amber" data-group="photo" data-label="Photo 3" onclick="openBlogLightbox('photo', 2)" style="cursor:pointer;">
+          
+          <img src="images/P3.jpg" alt="Photo 3" style="width:100%;height:100%;object-fit:cover;"><span style="font-size:1.3rem;">🌅</span>Photo 3
+          <div class="grid-overlay"><span class="grid-overlay-text">🌅 Photo 3</span></div>
+        </div>
+        <div class="grid-item blog-grid-item tint-purple" data-group="photo" data-label="Photo 4" onclick="openBlogLightbox('photo', 3)" style="cursor:pointer;">
+          
+          <img src="images/P4.jpg" alt="Photo 4" style="width:100%;height:100%;object-fit:cover;"><span style="font-size:1.3rem;">🏙️</span>Photo 4
+          <div class="grid-overlay"><span class="grid-overlay-text">🏙️ Photo 4</span></div>
+        </div>
+        <div class="grid-item blog-grid-item tint-green" data-group="photo" data-label="Photo 5" onclick="openBlogLightbox('photo', 4)" style="cursor:pointer;">
+         
+          <img src="images/P5.jpg" alt="Photo 5" style="width:100%;height:100%;object-fit:cover;"><span style="font-size:1.3rem;">🌄</span>Photo 5
+          <div class="grid-overlay"><span class="grid-overlay-text">🌄 Photo 5</span></div>
+        </div>
+        <div class="grid-item blog-grid-item tint-navy" data-group="photo" data-label="Photo 6" onclick="openBlogLightbox('photo', 5)" style="cursor:pointer;">
+          
+          <img src="images/P6.jpg" alt="Photo 6" style="width:100%;height:100%;object-fit:cover;"><span style="font-size:1.3rem;">⭐</span>Photo 6
+          <div class="grid-overlay"><span class="grid-overlay-text">⭐ Photo 6</span></div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:20px;">
+        <a href="https://www.instagram.com/_meet.patel.creations_" target="_blank" class="insta-cta">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+          Follow @_meet.patel.creations_
+        </a>
+      </div>
+    </article>
+
+    <hr class="post-sep" />
+
+    <!-- POST 3: ALBERTA -->
+    <article class="blog-post">
+      <span class="post-tag tag-travel">🏔️ Travel</span>
+      <h2 class="post-title">Alberta with THE BOYS - Banff, Lakes & Memories</h2>
+      <div class="post-meta"><span>5 min read</span><span>·</span><span>Summer 2024 · Banff, Alberta</span></div>
+      <div class="post-body">
+        <p>Some trips exist beyond the photos. The Alberta trip with my boys was one of those. No agenda, no stress - just <strong>mountains, glaciers, open roads, and the kind of laughter that makes your stomach hurt</strong>.</p>
+        <p>We drove into Banff on a sunny morning and it felt like stepping into a painting. The <strong>turquoise lakes</strong> - Louise, Moraine, Peyto looked too perfect to be real.</p>
+        <p>Highlights: the <strong>Banff Gondola</strong>, the <strong>Columbia Icefield</strong>, the <strong>Skywalk</strong>, <strong>kayaking</strong>, a <strong>movie night under the stars</strong>, and long drives on Highway 93 with the best views and better company.</p>
+      </div>
+      <div class="travel-highlights">
+        <span class="highlight-chip">🚠 Banff Gondola</span><span class="highlight-chip">🧊 Columbia Icefield</span><span class="highlight-chip">🌉 Skywalk</span><span class="highlight-chip">🚣 Kayaking</span><span class="highlight-chip">🏔️ Moraine Lake</span><span class="highlight-chip">🎬 Movie Night</span><span class="highlight-chip">🍽️ Dinner Outside</span><span class="highlight-chip">🚗 Scenic Drive</span>
+      </div>
+      <div class="photo-grid">
+        <div class="grid-item blog-grid-item tint-blue" data-group="alberta" data-label="Banff" onclick="openBlogLightbox('alberta', 0)" style="cursor:pointer;">
+         
+          <img src="images/A1.jpg" alt="Banff" style="width:100%;height:100%;object-fit:cover;"><span style="font-size:1.3rem;">🏔️</span>Banff
+          <div class="grid-overlay"><span class="grid-overlay-text">🏔️ Kayaking</span></div>
+        </div>
+        <div class="grid-item blog-grid-item tint-teal" data-group="alberta" data-label="Lake Louise" onclick="openBlogLightbox('alberta', 1)" style="cursor:pointer;">
+          
+          <img src="images/A2.jpg" alt="Lake Louise" style="width:100%;height:100%;object-fit:cover;"><span style="font-size:1.3rem;">💙</span>Lake Louise
+          <div class="grid-overlay"><span class="grid-overlay-text">💙 Banff</span></div>
+        </div>
+        <div class="grid-item blog-grid-item tint-navy" data-group="alberta" data-label="Gondola" onclick="openBlogLightbox('alberta', 2)" style="cursor:pointer;">
+         
+          <img src="images/A3.jpg" alt="Gondola" style="width:100%;height:100%;object-fit:cover;"><span style="font-size:1.3rem;">🚠</span>Gondola
+          <div class="grid-overlay"><span class="grid-overlay-text">🚠 Lake Minewanka</span></div>
+        </div>
+        <div class="grid-item blog-grid-item tint-amber" data-group="alberta" data-label="Icefield" onclick="openBlogLightbox('alberta', 3)" style="cursor:pointer;">
+         
+          <img src="images/A4.jpg" alt="Icefield" style="width:100%;height:100%;object-fit:cover;"><span style="font-size:1.3rem;">🧊</span>Icefield
+          <div class="grid-overlay"><span class="grid-overlay-text">🧊 Icefield</span></div>
+        </div>
+        <div class="grid-item blog-grid-item tint-green" data-group="alberta" data-label="The Boys" onclick="openBlogLightbox('alberta', 4)" style="cursor:pointer;">
+         
+          <img src="images/A5.jpg" alt="The Boys" style="width:100%;height:100%;object-fit:cover;"><span style="font-size:1.3rem;">👨</span>The Boys
+          <div class="grid-overlay"><span class="grid-overlay-text">👨 The Boys</span></div>
+        </div>
+        <div class="grid-item blog-grid-item tint-purple" data-group="alberta" data-label="Skywalk" onclick="openBlogLightbox('alberta', 5)" style="cursor:pointer;">
+          
+          <img src="images/A6.jpg" alt="Skywalk" style="width:100%;height:100%;object-fit:cover;"><span style="font-size:1.3rem;">🌉</span>Skywalk
+          <div class="grid-overlay"><span class="grid-overlay-text">🌉 Peyto Lake</span></div>
+        </div>
+      </div>
+    </article>
+
+    <hr class="post-sep" />
+
+    <!-- POST 4: OWEEK -->
+    <article class="blog-post">
+      <span class="post-tag tag-uni">🎓 University Life</span>
+      <h2 class="post-title">Orientation Leader - OWeek at TMU</h2>
+      <div class="post-meta"><span>4 min read</span><span>·</span><span>2022 · 2023 · 2024 · TMU</span></div>
+      <div class="post-body">
+        <p>Three years in a row. Three OWeeks. Three cohorts of first-year students who reminded me how exciting and terrifying starting university feels.</p>
+        <p>Being an <strong>Orientation Leader at TMU</strong> was one of the most rewarding things I did. OWeek was pure energy - activities, games, icebreakers, <strong>movie nights</strong>, good food, and that unforgettable trip to <strong>Toronto Islands</strong>.</p>
+        <p><strong>Would do it all over again without a second thought.</strong></p>
+      </div>
+      <div class="photo-grid">
+        <div class="grid-item blog-grid-item tint-amber" data-group="oweek" data-label="OWeek 2022" onclick="openBlogLightbox('oweek', 0)" style="cursor:pointer;">
+          
+          <img src="images/O1.jpg" alt="OWeek 2022" style="width:100%;height:100%;object-fit:cover;"><span style="font-size:1.3rem;">🎉</span>OWeek 2022
+          <div class="grid-overlay"><span class="grid-overlay-text">🎉 OWeek 2022</span></div>
+        </div>
+        <div class="grid-item blog-grid-item tint-red" data-group="oweek" data-label="Activities" onclick="openBlogLightbox('oweek', 1)" style="cursor:pointer;">
+          
+          <img src="images/O2.jpg" alt="Activities" style="width:100%;height:100%;object-fit:cover;"> <span style="font-size:1.3rem;">🎊</span>Activities
+          <div class="grid-overlay"><span class="grid-overlay-text">🎊 Activities</span></div>
+        </div>
+        <div class="grid-item blog-grid-item tint-teal" data-group="oweek" data-label="Toronto Islands" onclick="openBlogLightbox('oweek', 2)" style="cursor:pointer;">
+         
+          <img src="images/O3.jpg" alt="Toronto Islands" style="width:100%;height:100%;object-fit:cover;"> <span style="font-size:1.3rem;">🏝️</span>Toronto Islands
+          <div class="grid-overlay"><span class="grid-overlay-text">🏝️ RU</span></div>
+        </div>
+        <div class="grid-item blog-grid-item tint-purple" data-group="oweek" data-label="OWeek 2023" onclick="openBlogLightbox('oweek', 3)" style="cursor:pointer;">
+          
+          <img src="images/O4.jpg" alt="OWeek 2023" style="width:100%;height:100%;object-fit:cover;"><span style="font-size:1.3rem;">🎓</span>OWeek 2023
+          <div class="grid-overlay"><span class="grid-overlay-text">🎓 SLC LIVE</span></div>
+        </div>
+        <div class="grid-item blog-grid-item tint-green" data-group="oweek" data-label="Movie Night" onclick="openBlogLightbox('oweek', 4)" style="cursor:pointer;">
+          
+          <img src="images/O5.jpg" alt="Movie Night" style="width:100%;height:100%;object-fit:cover;"> <span style="font-size:1.3rem;">🎬</span>Movie Night
+          <div class="grid-overlay"><span class="grid-overlay-text">🎬 Fall</span></div>
+        </div>
+        <div class="grid-item blog-grid-item tint-blue" data-group="oweek" data-label="OWeek 2024" onclick="openBlogLightbox('oweek', 5)" style="cursor:pointer;">
+          
+          <img src="images/O6.jpg" alt="OWeek 2024" style="width:100%;height:100%;object-fit:cover;"><span style="font-size:1.3rem;">💙</span>OWeek 2024
+          <div class="grid-overlay"><span class="grid-overlay-text">💙 OWeek 2023</span></div>
+        </div>
+      </div>
+    </article>
+
+    <footer><p>© 2026 Meet Patel</p></footer>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════
+       PAGE 4: CONTACT
+  ════════════════════════════════════════════════════ -->
+  <div id="page-contact" class="page">
+    <div class="stage">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:44px;width:100%;padding:44px 0;">
+        <div class="hero-card">
+          <div class="text-circle">
+            <p class="eyebrow">Have a great idea?</p>
+            <h1>Let's Talk About Your Idea</h1>
+            <button class="cta-btn" onclick="openModal()">Get in Touch</button>
+          </div>
+          <div class="photo-circle">
+            <img src="images/C1.jpg" alt="Meet Patel" />
+          </div>
+        </div>
+        <div class="deal-banner">
+          <div class="deal-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg></div>
+          <div class="deal-text">
+            <h3>📡 Looking for better Home Internet or Mobility deals?</h3>
+            <p>I can help you save on your monthly bills with the best Rogers & Bell plans. Reach out at <strong>meetpatel4402@gmail.com</strong> and I'll find the right deal for you.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer style="margin-top:0;"><p>© 2026 Meet Patel</p></footer>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════
+       JAVASCRIPT
+  ════════════════════════════════════════════════════ -->
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // ── Page navigation ──
+    function showPage(name) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + name).classList.add('active');
+      window.scrollTo(0, 0);
+      updateActiveNav(name);
+    }
+
+    function updateActiveNav(name) {
+      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+      const map = { home: 'nav-about', experience: 'nav-exp', blog: 'nav-blog', contact: 'nav-contact' };
+      if (map[name]) document.getElementById(map[name]).classList.add('active');
+    }
+
+    function scrollToAbout() {
+      setTimeout(() => {
+        const el = document.getElementById('about-section');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+
+    // ── Hamburger ──
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+    function closeMobile() {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    }
+    document.addEventListener('click', (e) => {
+      if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) closeMobile();
+    });
+
+    // ── Lightbox (Snap 4-image) ──
+    let currentLbIndex = 0;
+    function openLightbox(index) {
+      currentLbIndex = index;
+      renderLightbox();
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function handleLbClick(e) { if (e.target === document.getElementById('lightbox')) closeLightbox(); }
+    function lbNav(dir) {
+      const items = document.querySelectorAll('#snapGrid .snap-item');
+      currentLbIndex = (currentLbIndex + dir + items.length) % items.length;
+      renderLightbox();
+    }
+    function renderLightbox() {
+      const items = document.querySelectorAll('#snapGrid .snap-item');
+      const item = items[currentLbIndex];
+      const img = item ? item.querySelector('img') : null;
+      const ph = item ? item.querySelector('.mosaic-placeholder') : null;
+      const label = ph ? ph.textContent.trim() : ('Photo ' + (currentLbIndex + 1));
+      document.getElementById('lightboxCounter').textContent = (currentLbIndex + 1) + ' / ' + items.length;
+      document.getElementById('lightboxContent').innerHTML = img
+        ? '<img src="' + img.src + '" alt="' + (img.alt || '') + '" />'
+        : '<div class="lightbox-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><p>' + label + ' — Add your image here</p></div>';
+    }
+
+    // ── Trio Lightbox ──
+    let currentTrioIndex = 0;
+    function openTrioLightbox(index) {
+      currentTrioIndex = index;
+      renderTrioLightbox();
+      document.getElementById('trioLightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeTrioLightbox() {
+      document.getElementById('trioLightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function handleTrioLbClick(e) { if (e.target === document.getElementById('trioLightbox')) closeTrioLightbox(); }
+    function trioLbNav(dir) {
+      const items = document.querySelectorAll('.work-trio .trio-item');
+      currentTrioIndex = (currentTrioIndex + dir + items.length) % items.length;
+      renderTrioLightbox();
+    }
+    function renderTrioLightbox() {
+      const items = document.querySelectorAll('.work-trio .trio-item');
+      const item = items[currentTrioIndex];
+      const img = item ? item.querySelector('img') : null;
+      const ph = item ? item.querySelector('.trio-placeholder') : null;
+      const label = ph ? ph.textContent.trim() : ('Photo ' + (currentTrioIndex + 1));
+      document.getElementById('trioLightboxCounter').textContent = (currentTrioIndex + 1) + ' / ' + items.length;
+      document.getElementById('trioLightboxContent').innerHTML = img
+        ? '<img src="' + img.src + '" alt="' + (img.alt || '') + '" />'
+        : '<div class="lightbox-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><p>' + label + ' — Add your image here</p></div>';
+    }
+
+    // Keyboard nav for lightboxes
+    document.addEventListener('keydown', (e) => {
+      if (document.getElementById('lightbox').classList.contains('open')) {
+        if (e.key === 'ArrowRight') lbNav(1);
+        if (e.key === 'ArrowLeft')  lbNav(-1);
+        if (e.key === 'Escape')     closeLightbox();
+      }
+      if (document.getElementById('trioLightbox').classList.contains('open')) {
+        if (e.key === 'ArrowRight') trioLbNav(1);
+        if (e.key === 'ArrowLeft')  trioLbNav(-1);
+        if (e.key === 'Escape')     closeTrioLightbox();
+      }
+      if (document.getElementById('modalOverlay').classList.contains('open') && e.key === 'Escape') closeModal();
+      if (document.getElementById('blogLightbox').classList.contains('open')) {
+        if (e.key === 'ArrowRight') blogLbNav(1);
+        if (e.key === 'ArrowLeft')  blogLbNav(-1);
+        if (e.key === 'Escape')     closeBlogLightbox();
+      }
+    });
+
+    // ── Contact Modal ──
+    function openModal() {
+      document.getElementById('modalOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function handleOverlayClick(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
+    function sendMessage() {
+      const fname = document.getElementById('fname').value.trim();
+      const femail = document.getElementById('femail').value.trim();
+      const fmessage = document.getElementById('fmessage').value.trim();
+      if (!fname || !femail || !fmessage) { alert('Please fill in your name, email, and message.'); return; }
+      const lname = document.getElementById('lname').value.trim();
+      const subject = encodeURIComponent('Portfolio Contact from ' + fname + ' ' + lname);
+      const body = encodeURIComponent('Hi Meet,\n\nNew message from your portfolio.\n\nName: ' + fname + ' ' + lname + '\nEmail: ' + femail + '\n\nMessage:\n' + fmessage);
+      window.location.href = 'mailto:meetpatel@example.com?subject=' + subject + '&body=' + body;
+      document.getElementById('formContent').style.display = 'none';
+      document.getElementById('modalSuccess').style.display = 'flex';
+    }
+
+    // ══ Blog Lightbox ══
+    let blogLbGroupItems = [];
+    let blogLbCurrentIndex = 0;
+
+    function openBlogLightbox(groupId, index) {
+      blogLbGroupItems = Array.from(document.querySelectorAll('.blog-grid-item[data-group="' + groupId + '"]'));
+      blogLbCurrentIndex = index;
+      renderBlogLightbox();
+      document.getElementById('blogLightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeBlogLightbox() {
+      document.getElementById('blogLightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function blogLbNav(dir) {
+      blogLbCurrentIndex = (blogLbCurrentIndex + dir + blogLbGroupItems.length) % blogLbGroupItems.length;
+      renderBlogLightbox();
+    }
+    function renderBlogLightbox() {
+      const item = blogLbGroupItems[blogLbCurrentIndex];
+      const img = item ? item.querySelector('img') : null;
+      const label = item ? (item.dataset.label || ('Photo ' + (blogLbCurrentIndex + 1))) : '';
+      document.getElementById('blogLightboxCounter').textContent = (blogLbCurrentIndex + 1) + ' / ' + blogLbGroupItems.length;
+      document.getElementById('blogLightboxContent').innerHTML = img
+        ? '<img src="' + img.src + '" alt="' + (img.alt || '') + '" />'
+        : '<div class="lightbox-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><p>' + label + ' — Add your image here</p></div>';
+    }
+</script>
+
+  <!-- ══ Snap Lightbox ══ -->
+  <div class="lightbox" id="lightbox" onclick="handleLbClick(event)">
+    <div class="lightbox-inner" id="lightboxInner">
+      <button class="lightbox-close" onclick="closeLightbox()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      <button class="lightbox-nav prev" onclick="lbNav(-1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button class="lightbox-nav next" onclick="lbNav(1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></button>
+      <div id="lightboxContent"></div>
+      <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
+  </div>
+
+  <!-- ══ Trio Lightbox ══ -->
+  <div class="lightbox" id="trioLightbox" onclick="handleTrioLbClick(event)">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" onclick="closeTrioLightbox()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      <button class="lightbox-nav prev" onclick="trioLbNav(-1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button class="lightbox-nav next" onclick="trioLbNav(1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></button>
+      <div id="trioLightboxContent"></div>
+      <div class="lightbox-counter" id="trioLightboxCounter"></div>
+    </div>
+  </div>
+
+  <!-- ══ Blog Lightbox ══ -->
+  <div class="lightbox" id="blogLightbox" onclick="if(event.target===this)closeBlogLightbox()">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" onclick="closeBlogLightbox()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+      <button class="lightbox-nav prev" onclick="blogLbNav(-1)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button class="lightbox-nav next" onclick="blogLbNav(1)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <div id="blogLightboxContent"></div>
+      <div class="lightbox-counter" id="blogLightboxCounter"></div>
+    </div>
+  </div>
+  <!-- ══ Contact Modal ══ -->
+  <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+    <div class="modal" id="modal">
+      <button class="modal-close" onclick="closeModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      <div id="formContent">
+        <p class="modal-title">Say Hello 👋</p>
+        <p class="modal-subtitle">Fill in the details and I'll get back to you within 24 hours.</p>
+        <div class="form-row">
+          <div class="form-group"><label for="fname">First Name</label><input type="text" id="fname" placeholder="John" /></div>
+          <div class="form-group"><label for="lname">Last Name</label><input type="text" id="lname" placeholder="Doe" /></div>
+        </div>
+        <div class="form-group"><label for="femail">Email Address</label><input type="email" id="femail" placeholder="john@example.com" /></div>
+        <div class="form-group"><label for="fmessage">Message</label><textarea id="fmessage" placeholder="Tell me what's on your mind..."></textarea></div>
+        <button class="send-btn" onclick="sendMessage()">Send Message <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22 11 13 2 9l20-7z"/></svg></button>
+      </div>
+      <div class="modal-success" id="modalSuccess">
+        <div class="success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" st
