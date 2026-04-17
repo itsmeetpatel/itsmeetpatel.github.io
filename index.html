@@ -587,9 +587,13 @@
        RESPONSIVE — TABLET (max 920px)
     ════════════════════════════════════════════════════ */
     @media (max-width: 920px) {
-      nav { padding: 0 24px; }
-      .nav-links, .nav-social { display: none; }
-      .hamburger { display: flex; }
+      nav { padding: 0 16px; }
+      .nav-links { display: flex; gap: 18px; }
+      .nav-links a { font-size: 0.78rem; }
+      .nav-social { display: flex; gap: 12px; }
+      .nav-social svg { width: 15px; height: 15px; }
+      .hamburger { display: none; }
+      .mobile-menu { display: none !important; }
       /* Home hero */
       .hero-inner { grid-template-columns: 1fr; padding: 56px 24px 72px; gap: 36px; text-align: center; }
       .hero-photo-wrap { order: 1; max-width: 340px; margin: 0 auto; }
@@ -628,7 +632,12 @@
        RESPONSIVE — MOBILE (max 560px)
     ════════════════════════════════════════════════════ */
     @media (max-width: 560px) {
-      nav { padding: 0 16px; }
+      nav { padding: 0 10px; }
+      .nav-logo img { height: 34px; width: 34px; }
+      .nav-links { gap: 10px; }
+      .nav-links a { font-size: 0.7rem; }
+      .nav-social { gap: 10px; }
+      .nav-social svg { width: 14px; height: 14px; }
       .hero-inner { padding: 44px 16px 64px; }
       .hero-photo-wrap { max-width: 260px; }
       .hero-name { font-size: clamp(2.6rem, 10vw, 4rem); }
