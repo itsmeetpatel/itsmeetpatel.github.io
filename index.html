@@ -183,14 +183,31 @@
       margin-bottom: 20px; font-weight: 300;
     }
     .about-body p strong { font-weight: 700; color: var(--black); }
-    .about-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+    .about-tags { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
     .tag {
-      font-family: var(--font); font-size: 0.74rem; font-weight: 700;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      padding: 7px 15px; border: 1.5px solid #ccc; border-radius: 100px;
-      color: var(--black); cursor: default;
+      font-family: var(--font); font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      display: flex; align-items: center; gap: 7px;
+      color: #555; cursor: default;
     }
-    .tag:hover { background: transparent; color: var(--black); border-color: #ccc; }
+    .tag::before {
+      content: ''; display: inline-block; width: 6px; height: 6px;
+      border-radius: 50%; background: var(--accent); flex-shrink: 0;
+    }
+    .tag:hover { background: transparent; color: #555; border-color: transparent; }
+    .about-exp-cta { margin-top: 36px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .about-exp-cta p { font-size: 0.95rem; font-weight: 300; color: var(--gray-text); font-style: italic; }
+    .exp-cta-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--black); color: var(--white);
+      font-family: var(--font); font-weight: 700; font-size: 0.78rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 11px 22px; border-radius: 50px; border: none;
+      cursor: pointer; transition: background 0.2s, transform 0.18s;
+      text-decoration: none;
+    }
+    .exp-cta-btn:hover { background: #333; transform: translateY(-2px); }
+    .exp-cta-btn svg { width: 14px; height: 14px; }
 
     /* ════════════════════════════════════════════════════
        PAGE 2: EXPERIENCE
@@ -335,8 +352,13 @@
     .job-duties { list-style: none; margin-bottom: 18px; }
     .job-duties li { position: relative; padding-left: 18px; font-size: 0.9rem; font-weight: 300; line-height: 1.75; color: #444; margin-bottom: 7px; }
     .job-duties li::before { content: '—'; position: absolute; left: 0; color: var(--gray-mid); font-weight: 400; }
-    .skills-row { display: flex; flex-wrap: wrap; gap: 7px; }
-    .skill-chip { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; padding: 4px 11px; background: var(--gray-light); border-radius: 100px; color: #555; border: 1px solid var(--gray-mid); }
+    .skills-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0; }
+    .skill-chip {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em;
+      text-transform: uppercase; color: var(--gray-text);
+      background: none; border: none; border-radius: 0; padding: 0;
+    }
+    .skill-chip:not(:last-child)::after { content: ' | '; color: var(--gray-mid); margin: 0 6px; font-weight: 400; }
     .company-logo-box { width: 48px; height: 48px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.7rem; color: white; flex-shrink: 0; }
     .logo-smp { background: linear-gradient(135deg, #f39c12, #d68910); }
     /* Achievements */
@@ -662,6 +684,113 @@
       .lightbox-nav.next { right: -40px; }
       .achievements-strip { flex-direction: column; }
     }
+
+    /* ════════════════════════════════════════════════════
+       SCROLL FADE-IN ANIMATIONS
+    ════════════════════════════════════════════════════ */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fade-in-left {
+      opacity: 0;
+      transform: translateX(-32px);
+      transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+    }
+    .fade-in-left.visible { opacity: 1; transform: translateX(0); }
+    .fade-in-right {
+      opacity: 0;
+      transform: translateX(32px);
+      transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+    }
+    .fade-in-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* Stagger delays for children */
+    .fade-in:nth-child(1) { transition-delay: 0s; }
+    .fade-in:nth-child(2) { transition-delay: 0.1s; }
+    .fade-in:nth-child(3) { transition-delay: 0.2s; }
+    .fade-in:nth-child(4) { transition-delay: 0.3s; }
+    .fade-in:nth-child(5) { transition-delay: 0.4s; }
+
+    /* ════════════════════════════════════════════════════
+       ENHANCED HOVER & INTERACTION ANIMATIONS
+    ════════════════════════════════════════════════════ */
+    /* Job card lift */
+    .job-card {
+      transition: box-shadow 0.3s, border-color 0.3s, transform 0.3s;
+    }
+    .job-card:hover {
+      box-shadow: 0 16px 48px rgba(0,0,0,0.1);
+      border-color: #bbb;
+      transform: translateY(-4px);
+    }
+    /* Achievement stats pulse glow */
+    .achievement-stat {
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .achievement-stat:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 12px 40px rgba(139,94,60,0.4);
+    }
+    /* Snap photo zoom */
+    .snap-item, .trio-item {
+      transition: transform 0.3s;
+    }
+    .snap-item:hover, .trio-item:hover {
+      transform: scale(1.02);
+    }
+    /* Nav logo subtle spin on hover */
+    .nav-logo img {
+      transition: opacity 0.2s, border-color 0.2s, transform 0.4s;
+    }
+    .nav-logo:hover img {
+      transform: rotate(8deg) scale(1.08);
+    }
+    /* Section heading animated underline */
+    .section-heading {
+      position: relative; display: inline-block;
+    }
+    /* Blog grid hover lift */
+    .grid-item {
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .grid-item:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+    /* Illustration cards float on hover */
+    .illus-card {
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .illus-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.10);
+    }
+    /* Tag dot pulse */
+    .tag::before {
+      animation: dotPulse 2.5s ease-in-out infinite;
+    }
+    @keyframes dotPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.5); opacity: 0.6; }
+    }
+    /* Scroll indicator animated arrow bounce already on hero */
+    /* Timeline dot pop */
+    .job-card::before {
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .job-card:hover::before {
+      transform: scale(1.4);
+      box-shadow: 0 0 0 4px rgba(26,115,232,0.2);
+    }
+    .job-card.nontech:hover::before {
+      box-shadow: 0 0 0 4px rgba(192,57,43,0.2);
+    }
   </style>
 </head>
 <body>
@@ -733,10 +862,10 @@
 
     <section id="about-section">
       <div id="about">
-        <div class="about-label">
+        <div class="about-label fade-in-left">
           <h2 class="section-heading">About<br>Me.</h2>
         </div>
-        <div class="about-body">
+        <div class="about-body fade-in-right">
           <p>I'm a <strong>Computer Science graduate from TMU</strong> - a tech enthusiast based in Downtown Toronto who doesn't believe in doing just one thing. I've worn multiple hats across tech, retail, sales, and AI training, and I bring that multi-dimensional perspective to every role I take on.</p>
           <p>Currently, I work full-time as a <strong>Systems Consultant at Long View Systems</strong>, helping organizations navigate and solve IT challenges with precision and clarity. My ability to connect technical depth with business thinking is what sets me apart.</p>
           <p>Outside work, I'm passionate about <strong>photography, video editing, business domains, and travelling</strong>. I find stories in frames, patterns in markets, and energy in new places. My life runs on one word: <strong>HUSTLE.</strong></p>
@@ -744,6 +873,13 @@
             <span class="tag">Photography</span><span class="tag">Travel</span>
             <span class="tag">Business Minded</span><span class="tag">Computer Science</span>
             <span class="tag">Customer Success</span><span class="tag">Entrepreneurship</span>
+          </div>
+          <div class="about-exp-cta fade-in">
+            <p>Let's look at my experiences!</p>
+            <button class="exp-cta-btn" onclick="showPage('experience')">
+              Experience
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
           </div>
         </div>
       </div>
@@ -767,11 +903,11 @@
 
     <!-- EDUCATION -->
     <section class="section-block">
-      <div class="section-title-wrap">
+      <div class="section-title-wrap fade-in">
         <span class="section-icon icon-edu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>
         <h2>Education</h2><div class="section-divider"></div>
       </div>
-      <div class="edu-card">
+      <div class="edu-card fade-in">
         <div class="edu-logo-wrap"><img src="images/TMU.jpg" alt="Toronto Metropolitan University" /></div>
         <div class="edu-content">
           <p class="edu-degree">Bachelor of Science - Computer Science (Honours)</p>
@@ -790,7 +926,7 @@
 
     <!-- WORK EXPERIENCE -->
     <section class="section-block">
-      <div class="section-title-wrap">
+      <div class="section-title-wrap fade-in">
         <span class="section-icon icon-work"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></span>
         <h2>Work Experience</h2><div class="section-divider"></div>
       </div>
@@ -814,7 +950,7 @@
 
       <div class="timeline">
         <!-- Long View -->
-        <div class="job-card">
+        <div class="job-card fade-in">
           <div class="company-logo-row">
             <img src="images/Longview.png" alt="Long View" style="height:48px;width:48px;object-fit:contain;border-radius:6px;flex-shrink:0;background:white;padding:3px;" />
             <div><p class="job-title">Systems Consultant</p><p class="job-company">Long View Systems</p></div>
@@ -828,7 +964,7 @@
           <div class="skills-row"><span class="skill-chip">ServiceNow</span><span class="skill-chip">Windows/Linux/Mac</span><span class="skill-chip">Active Directory</span><span class="skill-chip">Network Support</span><span class="skill-chip">ITIL</span><span class="skill-chip">Documentation</span></div>
         </div>
         <!-- Humber -->
-        <div class="job-card">
+        <div class="job-card fade-in">
           <div class="company-logo-row">
             <img src="images/humber-logo.jpg" alt="Humber" style="height:48px;width:48px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#fff;padding:3px;" />
             <div><p class="job-title">Technical Support Analyst</p><p class="job-company">Humber College (Buchanan Technologies)</p></div>
@@ -842,7 +978,7 @@
           <div class="skills-row"><span class="skill-chip">Troubleshooting</span><span class="skill-chip">BMC Helix</span><span class="skill-chip">Asset Panda</span><span class="skill-chip">IT Documentation</span><span class="skill-chip">Imaging</span><span class="skill-chip">M365</span></div>
         </div>
         <!-- Outlier -->
-        <div class="job-card">
+        <div class="job-card fade-in">
           <div class="company-logo-row">
             <img src="images/Outlier.png" alt="Outlier AI" style="height:48px;width:48px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#fff;padding:3px;" />
             <div><p class="job-title">AI Math Trainer</p><p class="job-company">Outlier AI (Freelancer)</p></div>
@@ -856,7 +992,7 @@
           <div class="skills-row"><span class="skill-chip">Prompt Engineering</span><span class="skill-chip">LLMs</span><span class="skill-chip">AI Evaluation</span><span class="skill-chip">Mathematical Reasoning</span></div>
         </div>
         <!-- Extern -->
-        <div class="job-card">
+        <div class="job-card fade-in">
           <div class="company-logo-row">
             <img src="images/extern.png" alt="Extern" style="height:48px;width:48px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#fff;padding:3px;" />
             <div><p class="job-title">Web3 Security Data Analyst Intern</p><p class="job-company">Extern (Webacy)</p></div>
@@ -872,7 +1008,7 @@
       </div><!-- /timeline tech -->
 
       <!-- Snapshots -->
-      <div class="snap-section">
+      <div class="snap-section fade-in">
         <h3 class="snap-heading">Some Snapshots</h3>
         <div class="snap-grid" id="snapGrid">
           <div class="snap-item mt-web3" onclick="openLightbox(0)"><img src="images/Tech1.jpg" alt="Photo 1" style="width:100%;height:100%;object-fit:cover;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Photo 1<div class="snap-overlay"><span class="snap-num">01/04</span><div class="snap-overlay-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div></div>
@@ -890,7 +1026,7 @@
 
       <div class="timeline">
         <!-- INS Market -->
-        <div class="job-card nontech">
+        <div class="job-card nontech fade-in">
           <div class="company-logo-row">
             <img src="images/INS_600x600.jpg" alt="INS Market" style="height:48px;width:48px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#fff;padding:3px;" />
             <div><p class="job-title">Store Manager</p><p class="job-company">INS Market (Convenience Store)</p></div>
@@ -904,7 +1040,7 @@
           <div class="skills-row"><span class="skill-chip">Customer Service</span><span class="skill-chip">Cash Handling</span><span class="skill-chip">Sales</span><span class="skill-chip">Merchandising</span><span class="skill-chip">Retail Operations</span></div>
         </div>
         <!-- Internet Pros -->
-        <div class="job-card nontech">
+        <div class="job-card nontech fade-in">
           <div class="company-logo-row">
             <img src="images/Rogers-Logo.jpg" alt="Rogers" style="height:48px;width:48px;object-fit:contain;border-radius:6px;flex-shrink:0;background:white;padding:3px;" />
             <div><p class="job-title">Field Sales Representative</p><p class="job-company">Internet Pros — Rogers / Bell (Self-Employed)</p></div>
@@ -918,7 +1054,7 @@
           <div class="skills-row"><span class="skill-chip">Sales</span><span class="skill-chip">Marketing</span><span class="skill-chip">Customer Success</span><span class="skill-chip">KPI Management</span><span class="skill-chip">Telecommunications</span></div>
         </div>
         <!-- SMP -->
-        <div class="job-card nontech">
+        <div class="job-card nontech fade-in">
           <div class="company-logo-row">
             <img src="images/SMP.png" alt="SMP Promotions" style="height:48px;width:48px;object-fit:contain;border-radius:6px;flex-shrink:0;background:#fff;padding:3px;" />
             <div><p class="job-title">Office Manager</p><p class="job-company">SMP Promotions</p></div>
@@ -943,7 +1079,7 @@
 
 
         <!-- Achievements -->
-        <div class="achievements-strip">
+        <div class="achievements-strip fade-in">
           <div class="achievement-stat"><div class="stat-number">250+</div><div class="stat-label">Customers Served Daily</div></div>
           <div class="achievement-stat"><div class="stat-number">300+</div><div class="stat-label">Happy Telecom Customers</div></div>
           <div class="achievement-stat"><div class="stat-number">85%</div><div class="stat-label">Conversion Ratio in Sales</div></div>
@@ -955,11 +1091,11 @@
 
     <!-- VOLUNTEERING -->
     <section class="section-block">
-      <div class="section-title-wrap">
+      <div class="section-title-wrap fade-in">
         <span class="section-icon icon-vol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
         <h2>Volunteering</h2><div class="section-divider"></div>
       </div>
-      <div class="vol-card">
+      <div class="vol-card fade-in">
         <div class="vol-icon">🎓</div>
         <div>
           <p class="vol-title">Senior Orientation Leader</p>
@@ -983,7 +1119,7 @@
     </div>
 
     <!-- POST 1: LIFE SO FAR -->
-    <article class="blog-post">
+    <article class="blog-post fade-in">
       <span class="post-tag tag-life">🌱 Life & Reflections</span>
       <h2 class="post-title">Life So Far…</h2>
       <div class="post-meta"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 4 min read</span><span>·</span><span>Personal</span></div>
@@ -1024,7 +1160,7 @@
     <hr class="post-sep" />
 
     <!-- POST 2: PHOTOGRAPHY -->
-    <article class="blog-post">
+    <article class="blog-post fade-in">
       <span class="post-tag tag-photo">📷 Interests</span>
       <h2 class="post-title">Photography - Capturing Life, One Frame at a Time</h2>
       <div class="post-meta"><span>3 min read</span><span>·</span><span>Photography</span></div>
@@ -1075,7 +1211,7 @@
     <hr class="post-sep" />
 
     <!-- POST 3: ALBERTA -->
-    <article class="blog-post">
+    <article class="blog-post fade-in">
       <span class="post-tag tag-travel">🏔️ Travel</span>
       <h2 class="post-title">Alberta with THE BOYS - Banff, Lakes & Memories</h2>
       <div class="post-meta"><span>5 min read</span><span>·</span><span>Summer 2024 · Banff, Alberta</span></div>
@@ -1124,7 +1260,7 @@
     <hr class="post-sep" />
 
     <!-- POST 4: OWEEK -->
-    <article class="blog-post">
+    <article class="blog-post fade-in">
       <span class="post-tag tag-uni">🎓 University Life</span>
       <h2 class="post-title">Orientation Leader - OWeek at TMU</h2>
       <div class="post-meta"><span>4 min read</span><span>·</span><span>2022 · 2023 · 2024 · TMU</span></div>
@@ -1327,11 +1463,9 @@
       const fmessage = document.getElementById('fmessage').value.trim();
       if (!fname || !femail || !fmessage) { alert('Please fill in your name, email, and message.'); return; }
       const lname = document.getElementById('lname').value.trim();
-
       const sendBtn = document.querySelector('.send-btn');
       sendBtn.textContent = 'Sending…';
       sendBtn.disabled = true;
-
       emailjs.send('service_portfolio', 'template_u368er6', {
         from_name: fname + ' ' + lname,
         from_email: femail,
@@ -1374,6 +1508,32 @@
         ? '<img src="' + img.src + '" alt="' + (img.alt || '') + '" />'
         : '<div class="lightbox-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><p>' + label + ' — Add your image here</p></div>';
     }
+
+    // ── Scroll Fade-In (IntersectionObserver) ──
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          fadeObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    function initFadeObserver() {
+      document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el => {
+        fadeObserver.observe(el);
+      });
+    }
+
+    // Re-run observer when switching pages so newly visible elements animate
+    const _origShowPage = showPage;
+    function showPage(name) {
+      _origShowPage(name);
+      setTimeout(initFadeObserver, 50);
+    }
+
+    // Init on load
+    initFadeObserver();
 </script>
 
   <!-- ══ Snap Lightbox ══ -->
