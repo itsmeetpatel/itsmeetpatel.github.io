@@ -456,25 +456,79 @@
     .blog-hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; z-index: 0; }
     .blog-hero::after { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.62); z-index: 1; }
     .blog-hero > *:not(.blog-hero-bg) { position: relative; z-index: 2; }
-    .blog-hero .eyebrow { font-size: 0.74rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; display: flex; align-items: center; justify-content: center; gap: 12px; }
+
+    /* Blog hero text entrance */
+    .blog-hero .eyebrow {
+      font-size: 0.74rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 14px; display: flex; align-items: center; justify-content: center; gap: 12px;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
     .blog-hero .eyebrow::before, .blog-hero .eyebrow::after { content: ''; display: block; width: 36px; height: 1px; background: var(--accent); opacity: 0.6; }
-    .blog-hero h1 { font-weight: 800; font-size: clamp(2.8rem, 6vw, 5rem); color: var(--black); letter-spacing: -2px; line-height: 1; margin-bottom: 16px; }
-    .blog-hero p { font-weight: 400; font-size: 1rem; color: #444; max-width: 480px; margin: 0 auto; line-height: 1.75; }
+    .blog-hero h1 {
+      font-weight: 800; font-size: clamp(2.8rem, 6vw, 5rem); color: var(--black);
+      letter-spacing: -2px; line-height: 1; margin-bottom: 16px;
+      animation: fadeUp 0.7s 0.25s ease both;
+    }
+    .blog-hero p {
+      font-weight: 400; font-size: 1rem; color: #444; max-width: 480px; margin: 0 auto; line-height: 1.75;
+      animation: fadeUp 0.7s 0.4s ease both;
+    }
+
     .blog-post { max-width: 980px; margin: 0 auto; padding: 80px 44px; }
     .post-sep { border: none; border-top: 1px solid var(--gray-mid); max-width: 980px; margin: 0 auto; }
-    .post-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 5px 14px; border-radius: 100px; margin-bottom: 14px; }
+
+    /* Post tag animated shimmer */
+    .post-tag {
+      display: inline-flex; align-items: center; gap: 6px; font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase; padding: 5px 14px; border-radius: 100px;
+      margin-bottom: 14px; position: relative; overflow: hidden;
+    }
+    .post-tag::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.5) 50%, transparent 100%);
+      transform: translateX(-100%);
+      animation: shimmer 3s ease-in-out infinite;
+    }
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      50%, 100% { transform: translateX(100%); }
+    }
     .tag-life { background: #e8f5e9; color: #2e7d32; }
     .tag-photo { background: #fce4ec; color: #c2185b; }
     .tag-travel { background: #e8f0fd; color: #1a73e8; }
     .tag-uni { background: #fff3e0; color: #e65100; }
-    .post-title { font-weight: 800; font-size: clamp(1.7rem, 4vw, 2.8rem); letter-spacing: -1px; color: var(--black); line-height: 1.05; margin-bottom: 10px; }
+
+    /* Post title underline draw-in on hover */
+    .post-title {
+      font-weight: 800; font-size: clamp(1.7rem, 4vw, 2.8rem); letter-spacing: -1px;
+      color: var(--black); line-height: 1.05; margin-bottom: 10px;
+      display: block; position: relative;
+    }
+    .post-title::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 3px; background: var(--accent); border-radius: 2px;
+      transition: width 0.5s cubic-bezier(0.22,1,0.36,1);
+    }
+    .blog-post:hover .post-title::after { width: 100%; }
+
     .post-meta { font-size: 0.78rem; font-weight: 400; color: var(--gray-text); margin-bottom: 28px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .post-meta svg { width: 13px; height: 13px; }
     .post-body p { font-size: 1rem; font-weight: 300; color: #3a3a3a; line-height: 1.85; margin-bottom: 18px; }
     .post-body p strong { font-weight: 700; color: var(--black); }
     .life-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; margin-bottom: 36px; }
-    .illus-card { border-radius: 12px; padding: 20px; display: flex; align-items: center; gap: 14px; transition: transform 0.2s; }
-    .illus-card:hover { transform: translateX(5px); }
+
+    /* Illus cards staggered slide-in */
+    .illus-card {
+      border-radius: 12px; padding: 20px; display: flex; align-items: center; gap: 14px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      opacity: 0; transform: translateX(24px);
+    }
+    .illus-card.visible { opacity: 1; transform: translateX(0); }
+    .illus-card:nth-child(1) { transition-delay: 0s; }
+    .illus-card:nth-child(2) { transition-delay: 0.1s; }
+    .illus-card:nth-child(3) { transition-delay: 0.2s; }
+    .illus-card:nth-child(4) { transition-delay: 0.3s; }
+    .illus-card:hover { transform: translateX(6px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
     .illus-card + .illus-card { margin-top: 12px; }
     .card-growth { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); }
     .card-connect { background: linear-gradient(135deg, #e3f2fd, #bbdefb); }
@@ -483,26 +537,52 @@
     .illus-emoji { font-size: 1.8rem; flex-shrink: 0; }
     .illus-text h4 { font-weight: 700; font-size: 0.88rem; margin-bottom: 2px; }
     .illus-text p { font-size: 0.78rem; font-weight: 300; color: #555; line-height: 1.5; }
+
+    /* Journey steps bounce-in */
     .journey-steps { display: flex; justify-content: space-between; gap: 8px; margin: 28px 0; flex-wrap: wrap; }
-    .j-step { flex: 1; min-width: 70px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 6px; position: relative; }
+    .j-step {
+      flex: 1; min-width: 70px; text-align: center; display: flex; flex-direction: column;
+      align-items: center; gap: 6px; position: relative;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .j-step.visible { opacity: 1; transform: translateY(0); }
+    .j-step:nth-child(1) { transition-delay: 0s; }
+    .j-step:nth-child(2) { transition-delay: 0.12s; }
+    .j-step:nth-child(3) { transition-delay: 0.24s; }
+    .j-step:nth-child(4) { transition-delay: 0.36s; }
     .j-step::after { content: '→'; position: absolute; right: -12px; top: 14px; font-size: 0.9rem; color: var(--gray-mid); }
     .j-step:last-child::after { display: none; }
-    .j-dot { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+    .j-dot {
+      width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; font-size: 1.1rem;
+      transition: transform 0.3s;
+    }
+    .j-step:hover .j-dot { transform: scale(1.2) rotate(-8deg); }
     .j-step:nth-child(1) .j-dot { background: #fff8e1; }
     .j-step:nth-child(2) .j-dot { background: #e8f5e9; }
     .j-step:nth-child(3) .j-dot { background: #e3f2fd; }
     .j-step:nth-child(4) .j-dot { background: #fce4ec; }
     .j-label { font-size: 0.7rem; font-weight: 600; color: var(--gray-text); }
-    .wordcloud-wrap { margin-top: 32px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); max-width: 580px; margin-left: auto; margin-right: auto; }
+
+    .wordcloud-wrap {
+      margin-top: 32px; border-radius: 12px; overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08); max-width: 580px;
+      margin-left: auto; margin-right: auto;
+      transition: transform 0.4s, box-shadow 0.4s;
+    }
+    .wordcloud-wrap:hover { transform: scale(1.02); box-shadow: 0 12px 40px rgba(0,0,0,0.14); }
     .wordcloud-wrap img { width: 100%; display: block; }
     .wordcloud-caption { text-align: center; font-size: 0.76rem; font-weight: 300; font-style: italic; color: var(--gray-text); margin-top: 8px; }
+
+    /* Photo grid — staggered scale-in */
     .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 200px 200px; gap: 10px; margin-top: 36px; border-radius: 12px; overflow: hidden; }
     .grid-item { position: relative; overflow: hidden; background: var(--gray-light); cursor: default; }
     .blog-grid-item { cursor: pointer; }
     .grid-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
-    .grid-item:hover img { transform: scale(1.08); }
+    .grid-item:hover img { transform: scale(1.1); }
     .grid-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0); display: flex; align-items: flex-end; padding: 12px; transition: background 0.3s; }
-    .grid-item:hover .grid-overlay { background: rgba(0,0,0,0.3); }
+    .grid-item:hover .grid-overlay { background: rgba(0,0,0,0.38); }
     .grid-overlay-text { color: white; font-size: 0.74rem; font-weight: 600; opacity: 0; transform: translateY(8px); transition: opacity 0.3s, transform 0.3s; }
     .grid-item:hover .grid-overlay-text { opacity: 1; transform: translateY(0); }
     .tint-pink { background: linear-gradient(135deg, #fce4ec, #f8bbd0); }
@@ -513,18 +593,44 @@
     .tint-teal { background: linear-gradient(135deg, #e0f7fa, #b2ebf2); }
     .tint-navy { background: linear-gradient(135deg, #e8eaf6, #c5cae9); }
     .tint-red { background: linear-gradient(135deg, #ffebee, #ffcdd2); }
+
+    /* Instagram CTA pulse ring */
     .insta-cta {
       display: inline-flex; align-items: center; gap: 10px;
       background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
       color: white; font-weight: 700; font-size: 0.85rem;
       letter-spacing: 0.06em; padding: 12px 22px;
       border-radius: 50px; text-decoration: none; margin-top: 18px;
-      transition: opacity 0.2s, transform 0.2s;
+      transition: opacity 0.2s, transform 0.2s, box-shadow 0.3s;
+      position: relative;
     }
-    .insta-cta:hover { opacity: 0.88; transform: translateY(-2px); }
+    .insta-cta:hover {
+      opacity: 0.95; transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(131,58,180,0.4);
+    }
     .insta-cta svg { width: 18px; height: 18px; }
+
+    /* Travel highlights chips float-in */
     .travel-highlights { display: flex; flex-wrap: wrap; gap: 9px; margin: 24px 0 6px; }
-    .highlight-chip { display: flex; align-items: center; gap: 6px; background: var(--gray-light); border: 1px solid var(--gray-mid); border-radius: 100px; padding: 5px 13px; font-size: 0.76rem; font-weight: 600; color: var(--black); }
+    .highlight-chip {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--gray-light); border: 1px solid var(--gray-mid);
+      border-radius: 100px; padding: 5px 13px; font-size: 0.76rem; font-weight: 600; color: var(--black);
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .highlight-chip:hover {
+      background: var(--white); transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    /* Country card hover lift */
+    .country-card-wrap {
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .country-card-wrap:hover {
+      transform: translateY(-5px) scale(1.03);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.2) !important;
+    }
 
     /* ════════════════════════════════════════════════════
        PAGE 4: CONTACT
@@ -1137,7 +1243,7 @@
           <div class="illus-card card-music" style="margin-top:12px;"><span class="illus-emoji">✨</span><div class="illus-text"><h4>Simple Joys</h4><p>Happiness lives in the small things.</p></div></div>
         </div>
       </div>
-      <div class="journey-steps">
+      <div class="journey-steps fade-in">
         <div class="j-step"><div class="j-dot">👶</div><span class="j-label">Childhood</span></div>
         <div class="j-step"><div class="j-dot">📚</div><span class="j-label">School</span></div>
         <div class="j-step"><div class="j-dot">🎓</div><span class="j-label">University</span></div>
@@ -1153,11 +1259,11 @@
           <div style="position:relative;width:155px;height:96px;border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.12);flex-shrink:0;"><div style="position:absolute;inset:0;display:flex;flex-direction:column;"><div style="flex:1;background:#B22234;"></div><div style="flex:1;background:#fff;"></div><div style="flex:1;background:#B22234;"></div><div style="flex:1;background:#fff;"></div><div style="flex:1;background:#B22234;"></div><div style="flex:1;background:#fff;"></div><div style="flex:1;background:#B22234;"></div></div><div style="position:absolute;top:0;left:0;width:40%;height:43%;background:#3C3B6E;"></div><div style="position:absolute;inset:0;background:rgba(0,0,0,0.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;"><p style="font-weight:800;font-size:0.88rem;color:#fff;">USA</p><p style="font-size:0.65rem;color:rgba(255,255,255,0.75);font-weight:400;">Land of opportunity</p></div></div>
         </div>
       </div>
-      <div class="wordcloud-wrap"><img src="images/Word_cloud-ezremove.png" alt="Word cloud" /></div>
+      <div class="wordcloud-wrap fade-in"><img src="images/Word_cloud-ezremove.png" alt="Word cloud" /></div>
       <p class="wordcloud-caption">Words that define my outlook on life.</p>
     </article>
 
-    <hr class="post-sep" />
+    <hr class="post-sep fade-in" />
 
     <!-- POST 2: PHOTOGRAPHY -->
     <article class="blog-post fade-in">
@@ -1168,7 +1274,7 @@
         <p>Photography isn't just a hobby - it's how I <strong>slow down and pay attention</strong>. I love capturing <strong>nature, golden-hour light, quiet streets, and fleeting moments</strong>.</p>
         <p>I run an Instagram page - <strong>@_meet.patel.creations_</strong>  where I feature my photography work. Come take a look!</p>
       </div>
-      <div class="photo-grid">
+      <div class="photo-grid fade-in">
         <div class="grid-item blog-grid-item tint-pink" data-group="photo" data-label="Photo 1" onclick="openBlogLightbox('photo', 0)" style="cursor:pointer;">
           
           <img src="images/P1.jpg" alt="Photo 1" style="width:100%;height:100%;object-fit:cover;"><span style="font-size:1.3rem;">📸</span>Photo 1
@@ -1208,7 +1314,7 @@
       </div>
     </article>
 
-    <hr class="post-sep" />
+    <hr class="post-sep fade-in" />
 
     <!-- POST 3: ALBERTA -->
     <article class="blog-post fade-in">
@@ -1220,10 +1326,10 @@
         <p>We drove into Banff on a sunny morning and it felt like stepping into a painting. The <strong>turquoise lakes</strong> - Louise, Moraine, Peyto looked too perfect to be real.</p>
         <p>Highlights: the <strong>Banff Gondola</strong>, the <strong>Columbia Icefield</strong>, the <strong>Skywalk</strong>, <strong>kayaking</strong>, a <strong>movie night under the stars</strong>, and long drives on Highway 93 with the best views and better company.</p>
       </div>
-      <div class="travel-highlights">
+      <div class="travel-highlights fade-in">
         <span class="highlight-chip">🚠 Banff Gondola</span><span class="highlight-chip">🧊 Columbia Icefield</span><span class="highlight-chip">🌉 Skywalk</span><span class="highlight-chip">🚣 Kayaking</span><span class="highlight-chip">🏔️ Moraine Lake</span><span class="highlight-chip">🎬 Movie Night</span><span class="highlight-chip">🍽️ Dinner Outside</span><span class="highlight-chip">🚗 Scenic Drive</span>
       </div>
-      <div class="photo-grid">
+      <div class="photo-grid fade-in">
         <div class="grid-item blog-grid-item tint-blue" data-group="alberta" data-label="Banff" onclick="openBlogLightbox('alberta', 0)" style="cursor:pointer;">
          
           <img src="images/A1.jpg" alt="Banff" style="width:100%;height:100%;object-fit:cover;"><span style="font-size:1.3rem;">🏔️</span>Banff
@@ -1257,7 +1363,7 @@
       </div>
     </article>
 
-    <hr class="post-sep" />
+    <hr class="post-sep fade-in" />
 
     <!-- POST 4: OWEEK -->
     <article class="blog-post fade-in">
@@ -1269,7 +1375,7 @@
         <p>Being an <strong>Orientation Leader at TMU</strong> was one of the most rewarding things I did. OWeek was pure energy - activities, games, icebreakers, <strong>movie nights</strong>, good food, and that unforgettable trip to <strong>Toronto Islands</strong>.</p>
         <p><strong>Would do it all over again without a second thought.</strong></p>
       </div>
-      <div class="photo-grid">
+      <div class="photo-grid fade-in">
         <div class="grid-item blog-grid-item tint-amber" data-group="oweek" data-label="OWeek 2022" onclick="openBlogLightbox('oweek', 0)" style="cursor:pointer;">
           
           <img src="images/O1.jpg" alt="OWeek 2022" style="width:100%;height:100%;object-fit:cover;"><span style="font-size:1.3rem;">🎉</span>OWeek 2022
@@ -1337,6 +1443,7 @@
       document.getElementById('page-' + name).classList.add('active');
       window.scrollTo(0, 0);
       updateActiveNav(name);
+      setTimeout(initFadeObserver, 60);
     }
 
     function updateActiveNav(name) {
@@ -1352,20 +1459,25 @@
       }, 100);
     }
 
-    // ── Hamburger ──
+    // ── Hamburger (hidden on mobile but guard against null) ──
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobileMenu');
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('open');
-      mobileMenu.classList.toggle('open');
-    });
-    function closeMobile() {
-      hamburger.classList.remove('open');
-      mobileMenu.classList.remove('open');
+    if (hamburger && mobileMenu) {
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        mobileMenu.classList.toggle('open');
+      });
+      document.addEventListener('click', (e) => {
+        if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+          hamburger.classList.remove('open');
+          mobileMenu.classList.remove('open');
+        }
+      });
     }
-    document.addEventListener('click', (e) => {
-      if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) closeMobile();
-    });
+    function closeMobile() {
+      if (hamburger) hamburger.classList.remove('open');
+      if (mobileMenu) mobileMenu.classList.remove('open');
+    }
 
     // ── Lightbox (Snap 4-image) ──
     let currentLbIndex = 0;
@@ -1520,16 +1632,11 @@
     }, { threshold: 0.12 });
 
     function initFadeObserver() {
-      document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el => {
-        fadeObserver.observe(el);
+      document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right, .illus-card, .j-step').forEach(el => {
+        if (!el.classList.contains('visible')) {
+          fadeObserver.observe(el);
+        }
       });
-    }
-
-    // Re-run observer when switching pages so newly visible elements animate
-    const _origShowPage = showPage;
-    function showPage(name) {
-      _origShowPage(name);
-      setTimeout(initFadeObserver, 50);
     }
 
     // Init on load
